@@ -1,0 +1,24 @@
+{
+  "name": "servidor-local",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/mauro18p/Servidor-Local#readme",
+  "bugs": {
+    "url": "https://github.com/mauro18p/Servidor-Local/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mauro18p/Servidor-Local.git"
+  },
+  "license": "ISC",
+  "author": "Mauro",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.6",
+    "express": "^5.2.1"
+  }
+}
