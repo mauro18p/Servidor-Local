@@ -1,10 +1,10 @@
+// exercicio 1
 interface PedidoServico {
     cliente: string
     descricao: string
     horasEstimativa: number
     urgente: boolean
 }
-
 
 function Orcamento( pedidoServico: PedidoServico, precoHora: number) {
     const valorBase = precoHora * pedidoServico.horasEstimativa
