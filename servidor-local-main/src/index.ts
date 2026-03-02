@@ -70,7 +70,10 @@ app.post("/calcular-orcamento", (req: Request, res: Response) => {
 
   const calcularOrcamentoresponse = calcularOrcamento(pedido)
 
-  res.json(calcularOrcamentoresponse)
+  res.json({
+    mensagem: "Orçamento calculado com sucesso",
+    calcularOrcamentoresponse
+  })
 })
 
 app.listen(8080, () => {
