@@ -1,6 +1,7 @@
 import express, { type Request, type Response } from "express"
 import { adicionarServico, apagarServico, listarServicos, obterServico } from "./servico.js"
-import { calcularOrcamento, selecionarServicos } from "./orcamento.js"
+import { calcularOrcamento, obterPrestador, selecionarServicos,  } from "./orcamento.js"
+import { adicionarPrestador,  } from "./prestador.js"
 
 const app = express()
 app.use(express.json())
@@ -35,7 +36,7 @@ app.delete("/apagar-servico", (req: Request, res: Response) => {
     res.json(apagarServicoResponse)
   } else {
     res.json({
-      message: "Nome do servico eh obrigatorio"
+      message: "Nome do servico é obrigatorio"
     })
   }
 })
@@ -50,7 +51,7 @@ app.get("/obter-servico", (req: Request, res: Response) => {
     res.json(obterServicoResponse)
   } else {
     res.json({
-      message: "Nome do servico eh obrigatorio"
+      message: "Nome do servico é obrigatorio"
     })
   }
 })
@@ -75,6 +76,32 @@ app.post("/calcular-orcamento", (req: Request, res: Response) => {
     calcularOrcamentoresponse
   })
 })
+
+
+// rota para adicionar prestador 
+app.post("/adicionar-prestador", (req: Request, res: Response) => {
+  const novoPrestador = req.body
+
+  const addServicoResponse = adicionarPrestador(novoPrestador)
+
+  res.json(addServicoResponse)
+})
+
+// rota para obter servico pelo nome 
+app.post("/selecionar-prestador", (req: Request, res: Response) => {
+  const { nomeDoPrestador } = req.query
+
+  if (nomeDoPrestador ) {
+    const obterPrestadorResponse = obterPrestador(nomeDoPrestador as string)
+
+    res.json(obterPrestadorResponse)
+  } else {
+    res.json({
+      message: "mensagem: prestador nao encontrado"
+    })
+  }
+})
+
 
 app.listen(8080, () => {
   console.log("Server running on port 8080")

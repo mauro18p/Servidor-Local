@@ -28,3 +28,10 @@ export interface  PrestadorType {
     percentagemDesconto: number
     taxaUrgencia: number
 }
+
+// Para nome de prestador de servico
+export interface PrestNome {
+    status: boolean,
+    message: string,
+    data: string | null,
+}

@@ -1,5 +1,6 @@
 import { catalogoServicos } from "./servico.js"
 import { type PedidoServicoType, type PrestadorType, type ServicoType } from "./utils/types.js"
+import { Prestador, } from "./prestador.js";
 
 const taxaUrgencia: number = 0.3
 const minimoParaDesconto: number = 100
@@ -36,12 +37,26 @@ export function criarPrestadorDeServico(novoPestador: PrestadorType) {
     // se o prestador nao existir, adicionamos um novo prestador
     prestadorDeServico.push(novoPestador)
     return {
-                starus: true,
-                message: "Prestador de servico adicionado",
-                data: novoPestador
-            }
+        starus: true,
+        message: "Prestador de servico adicionado",
+        data: novoPestador
+    }
 
 }
+
+// obter um prestador pelo nome
+
+export function obterPrestador(novoPrestador: string): Prestador | null {
+
+    const nomeDoPrestador: Prestador[] = []
+    for (let i = 0; i < nomeDoPrestador.length; i++) {
+        if (nomeDoPrestador[i]?.nome === novoPrestador) {
+            return nomeDoPrestador[i]!
+        }
+    }
+    return null
+}
+
 
 // funcao para calcular o orcamento
 export function calcularOrcamento(pedido: PedidoServicoType) {
