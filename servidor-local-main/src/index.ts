@@ -59,20 +59,20 @@ app.get("/obter-servico", (req: Request, res: Response) => {
 app.post("/selecionar-servico", (req: Request, res: Response) => {
   const { nome } = req.body
 
-  const selecinarServicoResponse = selecionarServicos(nome as string)
+  const selecionarServicoResponse = selecionarServicos(nome as string)
 
-  res.json(selecinarServicoResponse)
+  res.json(selecionarServicoResponse)
 })
 
 // rota para calcular orcamento
 app.post("/calcular-orcamento", (req: Request, res: Response) => {
   const { pedido } = req.body
 
-  const calcularOrcamentoresponse = calcularOrcamento(pedido)
+  const calcularOrcamentoResponse = calcularOrcamento(pedido)
 
   res.json({
     mensagem: "Orçamento calculado com sucesso",
-    calcularOrcamentoresponse
+    calcularOrcamentoResponse
   })
 })
 
