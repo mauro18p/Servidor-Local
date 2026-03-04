@@ -1,7 +1,7 @@
 import express, { type Request, type Response } from "express"
 import { adicionarServico, apagarServico, listarServicos, obterServico } from "./servico.js"
-import { calcularOrcamento, obterPrestador, selecionarServicos,  } from "./orcamento.js"
-import { adicionarPrestador,  } from "./prestador.js"
+import { apagarNomeDoPrestador, calcularOrcamento, editarPrestadorDeServico, listarPrestadores, obterPrestador, selecionarServicos, } from "./orcamento.js"
+import { adicionarPrestador, Prestador, } from "./prestador.js"
 
 const app = express()
 app.use(express.json())
@@ -87,11 +87,19 @@ app.post("/adicionar-prestador", (req: Request, res: Response) => {
   res.json(addServicoResponse)
 })
 
+// rota para listar prestadores
+app.get("/listar-prestadores", (req: Request, res: Response) => {
+
+  const response = listarPrestadores()
+
+  res.json(response)
+})
+
 // rota para obter servico pelo nome 
 app.post("/selecionar-prestador", (req: Request, res: Response) => {
   const { nomeDoPrestador } = req.query
 
-  if (nomeDoPrestador ) {
+  if (nomeDoPrestador) {
     const obterPrestadorResponse = obterPrestador(nomeDoPrestador as string)
 
     res.json(obterPrestadorResponse)
@@ -99,6 +107,24 @@ app.post("/selecionar-prestador", (req: Request, res: Response) => {
     res.json({
       message: "mensagem: prestador nao encontrado"
     })
+  }
+})
+
+//rota para obter servico pelo nome
+app.put("/editar-prestador", (req: Request, res: Response) => {
+  const { nomeDoPrestador, prestadorExistente } = req.query
+
+  const editarPrestadorResponse = editarPrestadorDeServico(nomeDoPrestador as string, prestadorExistente)
+  res.json(editarPrestadorDeServico)
+})
+
+app.delete("/apagar-prestador", (req: Request, res: Response) => {
+  const { nomeDoPrestador } = req.query
+
+  if(nomeDoPrestador){
+    const apagarPrestadorResponse = apagarNomeDoPrestador(nomeDoPrestador as string)
+
+    res.json(apagarNomeDoPrestador)
   }
 })
 
