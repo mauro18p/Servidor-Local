@@ -1,4 +1,6 @@
-class Prestador {
+import type { PrestNome, ResponseType } from "./utils/types.js"
+
+export class Prestador {
     nome: string
     precoHora: number
     profissao: string
@@ -48,3 +50,35 @@ const prestador2 = new Prestador(
 
 prestador1.alterarPrecoHora(150)
 prestador1.alterarNome("Don Inacio")
+
+const nomeDoPrestador: Prestador[] = []
+
+
+export function adicionarPrestador(novoPrestador: Prestador): PrestNome {
+    if (!novoPrestador.nome || novoPrestador.precoHora <= 0) {
+        return ({
+            status: false,
+            message: "Erro: Nome obrigatório e preço deve ser maior que zero.",
+            data: null,
+        });
+    }
+
+    for (let i = 0; i < nomeDoPrestador.length; i++) {
+        if (nomeDoPrestador[i]?.nome === novoPrestador.nome) {
+            return ({
+                status: false,
+                message: `Erro: O prestador '${novoPrestador.profissao}' já existe.`,
+                data: null,
+            });
+        }
+    }
+
+    nomeDoPrestador.push(novoPrestador);
+
+    return ({
+        status: true,
+        message: "Sucesso: prestador adicionado!",
+        data:`Prestador '${novoPrestador.profissao}' foi adicionado`,
+    });
+}
+
