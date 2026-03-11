@@ -68,7 +68,7 @@ export function obterPrestador(nome: string): PrestadorType | null {
 
 
 // funcao para editar prestador de servico
-export function editarPrestadorDeServico(nomeDoPrestador: string, novoDadosDoPrestador: PrestadorType) {
+export function editarPrestadorDeServico(nomeDoPrestador: string, novoDadosDoPrestador: PrestadorType, PrestadorType: any) {
     // encontrar o prestador de servico e editar na minha lista
     //ciclo que percore a lista e verificar o nome do prestador de servico
     prestadorDeServico.map((prestadorExistente: PrestadorType) => {

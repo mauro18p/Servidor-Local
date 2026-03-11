@@ -95,7 +95,7 @@ app.get("/listar-prestadores", (req: Request, res: Response) => {
   res.json(response)
 })
 
-// rota para obter servico pelo nome 
+// rota para obter prestador pelo nome 
 app.post("/selecionar-prestador", (req: Request, res: Response) => {
   const { nomeDoPrestador } = req.query
 
@@ -110,12 +110,12 @@ app.post("/selecionar-prestador", (req: Request, res: Response) => {
   }
 })
 
-//rota para obter servico pelo nome
+//rota para editar prestador pelo nome
 app.put("/editar-prestador", (req: Request, res: Response) => {
   const { nomeDoPrestador, prestadorExistente } = req.query
 
-  const editarPrestadorResponse = editarPrestadorDeServico(nomeDoPrestador as string, prestadorExistente)
-  res.json(editarPrestadorDeServico)
+  const editarPrestadorResponse = editarPrestadorDeServico(nomeDoPrestador as string, novoDadosDoPrestador as PrestadorType)
+  res.json(editarPrestadorResponse)
 })
 
 app.delete("/apagar-prestador", (req: Request, res: Response) => {
@@ -124,7 +124,9 @@ app.delete("/apagar-prestador", (req: Request, res: Response) => {
   if(nomeDoPrestador){
     const apagarPrestadorResponse = apagarNomeDoPrestador(nomeDoPrestador as string)
 
-    res.json(apagarNomeDoPrestador)
+    res.json(apagarPrestadorResponse)
+  } return {
+    menssagem: false
   }
 })
 
