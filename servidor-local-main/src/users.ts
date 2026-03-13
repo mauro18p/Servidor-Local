@@ -18,37 +18,37 @@ export async function getUserById(id: string) {
     return Array.isArray(rows) ? rows[0] : null
 }
 
-export async function PostNewUser(id: string, nome: string, numero_identificacao: string,) {
-    const [rows] = await db.execute(
-        `INSERT INTO tbl_utilizadores (
-            id,
-            nome,
-            numero_identificacao,
-            data_nascimento,
-            email,
-            password,
-            telefone,
-            pais,
-            localidade,
-            enabled,
-            created_at,
-            updated_at
-        )  VALUES(
-            "a4a11708-60d9-4ffa-a474-f4aa3af34bf3",
-            "Roronoa Zoro",
-            "M005z",
-            "2003-07-18",
-            "swordsman@gmail.com",
-            "$2a$12$XO56XJLC2YMoPJgvRy152.vDrgWWtqB9uv1X9.3ZNp53B2VYHaIju",
-            "9954152",
-            "Japan",
-            "Tokyo",
-            true,
-            NOW(),
-            NOW()
-        ); `
-    )
+export async function PostNewUser() {
+    const query = `
+        INSERT INTO tbl_utilizadores (
+            id, nome, numero_identificacao, data_nascimento, 
+            email, password, telefone, pais, localidade, 
+            enabled, created_at, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
 
-    console.log(rows)
-    return rows
+    const values = [
+        "ba985ad2-09f1-4c79-8cca-876c3693ee58",
+        "Jon Snow",
+        "M001t",
+        "2003-07-18",
+        "lordSnow@gmail.com",
+        "$2a$12$rzwSu5A2tdGTulUrEVmPDeADqluT3STOwf0jo5L79EcyFPqh3eSJ6",
+        "9919293",
+        "The North",
+        "The Wall",
+        true,
+        new Date(),
+        new Date()
+        
+    ];
+
+    try {
+        const [rows] = await db.execute(query, values);
+        console.log("Adicionado com sucesso");
+        return rows;
+    } catch (error) {
+        console.error("Database error:", error);
+        throw error;
+    }
 }

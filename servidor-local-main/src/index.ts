@@ -132,7 +132,7 @@ app.delete("/apagar-prestador", (req: Request, res: Response) => {
 })
 
 
-// rota selecionar todos os utilizadores presentes os bases de dados
+// rota selecionar todos os utilizadores presentes no bases de dados
 app.get("/get-users", async (req: Request, res: Response) => {
   const getUsersResponse = await getUsers()
 
@@ -174,9 +174,33 @@ app.get("/get-user-by-id", async (req: Request, res: Response) => {
 // rota inserir utilizador
 app.post("/post-new-user", async (req: Request, res: Response) => {
   const PostNewUserResponse = await PostNewUser()
+  
+  if (PostNewUserResponse) {
 
-  res.json(PostNewUser)
+    if (!PostNewUserResponse) {
+      res.status(404).json({
+        status: "error",
+        message: "Nao foi possivel adicionar o utilizador",
+        data: null
+      })
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Utilizador adicionado com sucesso",
+      data: PostNewUserResponse
+    })
+  } else {
+    res.status(400).json({
+      status: "error",
+      message: "ereei",
+      data: null
+    })
+  }
+
 })
+;
+
 
 
 
