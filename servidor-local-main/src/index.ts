@@ -2,6 +2,7 @@ import express, { type Request, type Response } from "express"
 import { adicionarServico, apagarServico, listarServicos, obterServico } from "./servico.js"
 import { apagarNomeDoPrestador, calcularOrcamento, editarPrestadorDeServico, listarPrestadores, obterPrestador, selecionarServicos, } from "./orcamento.js"
 import { adicionarPrestador, Prestador, } from "./prestador.js"
+import { getUserById, getUsers, PostNewUser } from "./users.js"
 
 const app = express()
 app.use(express.json())
@@ -121,7 +122,7 @@ app.put("/editar-prestador", (req: Request, res: Response) => {
 app.delete("/apagar-prestador", (req: Request, res: Response) => {
   const { nomeDoPrestador } = req.query
 
-  if(nomeDoPrestador){
+  if (nomeDoPrestador) {
     const apagarPrestadorResponse = apagarNomeDoPrestador(nomeDoPrestador as string)
 
     res.json(apagarPrestadorResponse)
@@ -129,6 +130,54 @@ app.delete("/apagar-prestador", (req: Request, res: Response) => {
     menssagem: false
   }
 })
+
+
+// rota selecionar todos os utilizadores presentes os bases de dados
+app.get("/get-users", async (req: Request, res: Response) => {
+  const getUsersResponse = await getUsers()
+
+  res.json(getUsersResponse)
+})
+
+// rota selecionar utilizadores usando id
+app.get("/get-user-by-id", async (req: Request, res: Response) => {
+  const { id } = req.query
+
+  if (id) {
+    const getIdUserResponse = await getUserById(id as string)
+
+    if (!getIdUserResponse) {
+      res.status(404).json({
+        status: "error",
+        message: "Utilizador não encontrado",
+        data: null
+      })
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Utilizador encontrado",
+      data: getIdUserResponse
+    })
+  } else {
+    res.status(400).json({
+      status: "error",
+      message: "id eh obrigatorio",
+      data: null
+    })
+  }
+
+})
+
+
+
+// rota inserir utilizador
+app.post("/post-new-user", async (req: Request, res: Response) => {
+  const PostNewUserResponse = await PostNewUser()
+
+  res.json(PostNewUser)
+})
+
 
 
 app.listen(8080, () => {
