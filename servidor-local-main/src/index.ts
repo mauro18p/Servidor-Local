@@ -2,7 +2,7 @@ import express, { type Request, type Response } from "express"
 import { adicionarServico, apagarServico, listarServicos, obterServico } from "./servico.js"
 import { apagarNomeDoPrestador, calcularOrcamento, editarPrestadorDeServico, listarPrestadores, obterPrestador, selecionarServicos, } from "./orcamento.js"
 import { adicionarPrestador, Prestador, } from "./prestador.js"
-import { getUserById, getUsers, PostNewUser } from "./users.js"
+import { deleteUserById, getUserById, getUsers, PostNewUser } from "./users.js"
 
 const app = express()
 app.use(express.json())
@@ -114,8 +114,8 @@ app.post("/selecionar-prestador", (req: Request, res: Response) => {
 //rota para editar prestador pelo nome
 app.put("/editar-prestador", (req: Request, res: Response) => {
   const { nomeDoPrestador, prestadorExistente } = req.query
-
-  const editarPrestadorResponse = editarPrestadorDeServico(nomeDoPrestador as string, novoDadosDoPrestador as PrestadorType)
+  const { novoDadosDoPrestador } = req.body
+  const editarPrestadorResponse = editarPrestadorDeServico(nomeDoPrestador as string, novoDadosDoPrestador)
   res.json(editarPrestadorResponse)
 })
 
@@ -126,9 +126,10 @@ app.delete("/apagar-prestador", (req: Request, res: Response) => {
     const apagarPrestadorResponse = apagarNomeDoPrestador(nomeDoPrestador as string)
 
     res.json(apagarPrestadorResponse)
-  } return {
-    menssagem: false
+  } else {
+    return { menssagem: false }
   }
+  
 })
 
 
@@ -152,6 +153,7 @@ app.get("/get-user-by-id", async (req: Request, res: Response) => {
         message: "Utilizador não encontrado",
         data: null
       })
+      return
     }
 
     res.status(200).json({
@@ -174,18 +176,18 @@ app.get("/get-user-by-id", async (req: Request, res: Response) => {
 // rota inserir utilizador
 app.post("/post-new-user", async (req: Request, res: Response) => {
   const PostNewUserResponse = await PostNewUser()
-  
+
   if (PostNewUserResponse) {
 
     if (!PostNewUserResponse) {
-      res.status(404).json({
+      res.status(400).json({
         status: "error",
         message: "Nao foi possivel adicionar o utilizador",
         data: null
       })
     }
 
-    res.status(200).json({
+    res.status(201).json({
       status: "success",
       message: "Utilizador adicionado com sucesso",
       data: PostNewUserResponse
@@ -198,8 +200,39 @@ app.post("/post-new-user", async (req: Request, res: Response) => {
     })
   }
 
+});
+
+// rota apagar utilizador de base de dados
+app.get("/delete-user-by-id", async (req: Request, res: Response) => {
+  const { id } = req.query
+
+  if (id) {
+    const deleteUserByIdResponse = await deleteUserById(id as string)
+
+    if (!deleteUserByIdResponse) {
+      res.status(404).json({
+        status: "error",
+        message: "Utilizador não encontrado",
+        data: null
+      })
+      return
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Utilizador eliminado com sucesso",
+      data: deleteUserByIdResponse
+    })
+  } else {
+    res.status(400).json({
+      status: "error",
+      message: "id eh obrigatorio",
+      data: null
+    })
+  }
+
 })
-;
+
 
 
 

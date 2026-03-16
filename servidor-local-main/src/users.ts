@@ -1,5 +1,7 @@
 import db from "./lib/db.js"
 
+
+
 export async function getUsers() {
     const [rows] = await db.execute("SELECT * FROM tbl_utilizadores;")
 
@@ -51,4 +53,16 @@ export async function PostNewUser() {
         console.error("Database error:", error);
         throw error;
     }
+}
+
+
+export async function deleteUserById(id: string) {
+    const [rows] = await db.execute(
+        'DELETE FROM tbl_utilizadores WHERE id = ´a4a11708-60d9-4ffa-a474-f4aa3af34bf3´',
+
+        [id]
+    )
+
+    if (Array.isArray(rows) && rows.length === 0) return null
+    return Array.isArray(rows) ? rows[0] : null
 }

@@ -76,4 +76,23 @@ VALUES (
     NOW()
 );
 
+INSERT INTO tbl_utilizadores 
+ VALUES (
+	"4f4662d3-27fc-4e29-ac53-1a9ecf73e69e",
+	"Lula Inacio",
+    "M002b",
+    "1950-04-01",
+    "mentiroso@gmail.com",
+    "$2a$12$wOkrxlIb51AYJKFadnuSR.3k292v/lMsyqoKYmDae5LcgOuNQIWXy",
+    "9919191",
+    "Brasil",
+    "Rio de Janeiro",
+    true,
+    NOW(),
+    NOW()
+);
+
+DELETE FROM tbl_utilizadores 
+WHERE id = 'a4a11708-60d9-4ffa-a474-f4aa3af34bf3';
+
  

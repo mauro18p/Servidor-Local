@@ -45,11 +45,10 @@ export function criarPrestadorDeServico(novoPestador: PrestadorType) {
 
 // listar os prestadores
 export function listarPrestadores() {
-    const prestadorDeServico: PrestadorType[] = []
     return {
         status: true,
         message: "Lista de prestadores obtida com sucesso",
-        data: servicosSelecionados
+        data: prestadorDeServico  
     }
 }
 
@@ -68,7 +67,7 @@ export function obterPrestador(nome: string): PrestadorType | null {
 
 
 // funcao para editar prestador de servico
-export function editarPrestadorDeServico(nomeDoPrestador: string, novoDadosDoPrestador: PrestadorType, PrestadorType: any) {
+export function editarPrestadorDeServico(nomeDoPrestador: string, novoDadosDoPrestador: PrestadorType) {
     // encontrar o prestador de servico e editar na minha lista
     //ciclo que percore a lista e verificar o nome do prestador de servico
     prestadorDeServico.map((prestadorExistente: PrestadorType) => {
@@ -99,7 +98,7 @@ export function editarPrestadorDeServico(nomeDoPrestador: string, novoDadosDoPre
 // funcao para apagar um prestador de servico
 export function apagarNomeDoPrestador(nomeDoPrestador: string){
     //ciclo para percorrer a lista de prestadores
-    for (let i = 0; i = prestadorDeServico.length; i++) {
+    for (let i = 0; i < prestadorDeServico.length; i++) {
         //Ir verificar o nome do prestador for igual ao nome recebido
         if (prestadorDeServico[i]?.nome === nomeDoPrestador) {
             //se encontrar remover o prestador
