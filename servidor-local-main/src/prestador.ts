@@ -1,4 +1,5 @@
-import type { PrestNome, ResponseType } from "./utils/types.js"
+import db from "./lib/db.js"
+import type { PrestadorTypeDB, PrestNome, ResponseType } from "./utils/types.js"
 
 export class Prestador {
     nome: string
@@ -8,26 +9,25 @@ export class Prestador {
     percentagemDesconto: number
     taxaUrgencia: number
 
-    constructor(nomeDoPrestador: string, precoHoraDoPrestador: number, profissaoDoPrestador: string, minimoParaDescontoDoPrestador: number, percentagemDescontoDoPrestador: number, taxaUrgenciaDoPrestador: number)
-    {
+    constructor(nomeDoPrestador: string, precoHoraDoPrestador: number, profissaoDoPrestador: string, minimoParaDescontoDoPrestador: number, percentagemDescontoDoPrestador: number, taxaUrgenciaDoPrestador: number) {
         this.nome = nomeDoPrestador
         this.precoHora = precoHoraDoPrestador
         this.profissao = profissaoDoPrestador
         this.minimoParaDesconto = minimoParaDescontoDoPrestador
-        this.percentagemDesconto  = percentagemDescontoDoPrestador
+        this.percentagemDesconto = percentagemDescontoDoPrestador
         this.taxaUrgencia = taxaUrgenciaDoPrestador
     }
 
-    
-        alterarPrecoHora(novoPrecoHora: number) {
-            this.precoHora = novoPrecoHora
-        }
-    
-    
-        alterarNome(novoNome: string) {
-            this.nome = novoNome
-        }
-    
+
+    alterarPrecoHora(novoPrecoHora: number) {
+        this.precoHora = novoPrecoHora
+    }
+
+
+    alterarNome(novoNome: string) {
+        this.nome = novoNome
+    }
+
 }
 
 
@@ -54,31 +54,22 @@ prestador1.alterarNome("Don Inacio")
 const nomeDoPrestador: Prestador[] = []
 
 
-export function adicionarPrestador(novoPrestador: Prestador): PrestNome {
-    if (!novoPrestador.nome || novoPrestador.precoHora <= 0) {
-        return ({
-            status: false,
-            message: "Erro: Nome obrigatório e preço deve ser maior que zero.",
-            data: null,
-        });
+
+
+// Trabalhar com base de dados
+// Trabalhar com base de dados
+// Trabalhar com base de dados
+// Trabalhar com base de dados
+// Trabalhar com base de dados
+
+
+export async function AddNewPrestador(newPrestador: PrestadorTypeDB) {
+    console.log({newPrestador})
+
+    try {
+        const query = ''
+    } catch (error) {
+        
     }
-
-    for (let i = 0; i < nomeDoPrestador.length; i++) {
-        if (nomeDoPrestador[i]?.nome === novoPrestador.nome) {
-            return ({
-                status: false,
-                message: `Erro: O prestador '${novoPrestador.profissao}' já existe.`,
-                data: null,
-            });
-        }
-    }
-
-    nomeDoPrestador.push(novoPrestador);
-
-    return ({
-        status: true,
-        message: "Sucesso: prestador adicionado!",
-        data:`Prestador '${novoPrestador.profissao}' foi adicionado`,
-    });
 }
-
+ 

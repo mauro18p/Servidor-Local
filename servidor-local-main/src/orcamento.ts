@@ -37,7 +37,7 @@ export function criarPrestadorDeServico(novoPestador: PrestadorType) {
     // se o prestador nao existir, adicionamos um novo prestador
     prestadorDeServico.push(novoPestador)
     return {
-        starus: true,
+        status: true,
         message: "Prestador de servico adicionado",
         data: novoPestador
     }

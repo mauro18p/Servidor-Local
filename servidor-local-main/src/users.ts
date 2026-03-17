@@ -1,5 +1,11 @@
 import db from "./lib/db.js"
+import mysql from "mysql2/promise"
 
+// Trabalhar com base de dados
+// Trabalhar com base de dados
+// Trabalhar com base de dados
+// Trabalhar com base de dados
+// Trabalhar com base de dados
 
 
 export async function getUsers() {
@@ -30,15 +36,15 @@ export async function PostNewUser() {
     `;
 
     const values = [
-        "ba985ad2-09f1-4c79-8cca-876c3693ee58",
-        "Jon Snow",
-        "M001t",
+        "ba985ad2-09f1-4c79-8cca-876c3693e",
+        "Snow",
+        "N123",
         "2003-07-18",
         "lordSnow@gmail.com",
-        "$2a$12$rzwSu5A2tdGTulUrEVmPDeADqluT3STOwf0jo5L79EcyFPqh3eSJ6",
-        "9919293",
+        "$2a$12$rzwSu5A2tdGTulUrEVmPDeADqluT3STOwf0jo5L79Ecy",
+        "9919213",
         "The North",
-        "The Wall",
+        "woods",
         true,
         new Date(),
         new Date()
@@ -58,11 +64,14 @@ export async function PostNewUser() {
 
 export async function deleteUserById(id: string) {
     const [rows] = await db.execute(
-        'DELETE FROM tbl_utilizadores WHERE id = ´a4a11708-60d9-4ffa-a474-f4aa3af34bf3´',
+        'DELETE FROM tbl_utilizadores WHERE id =?',
 
         [id]
-    )
+    ) as [mysql.ResultSetHeader, mysql.FieldPacket[]]
 
-    if (Array.isArray(rows) && rows.length === 0) return null
-    return Array.isArray(rows) ? rows[0] : null
+    if (rows.affectedRows === 0) {
+        return null;
+    }
+
+    return { success: true, deletedId: id };
 }
