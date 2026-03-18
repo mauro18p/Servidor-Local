@@ -44,7 +44,7 @@ export interface PrestNome {
 
 
 
-export interface utilizadorType {
+export interface userType {
     id: string
     nome: string
     numero_identificacao: string

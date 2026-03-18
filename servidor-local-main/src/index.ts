@@ -4,6 +4,7 @@ import { apagarNomeDoPrestador, calcularOrcamento, editarPrestadorDeServico, lis
 import { Prestador, } from "./prestador.js"
 import { deleteUserById, getUserById, getUsers, PostNewUser } from "./users.js"
 import type { ServicoTypeDB } from "./utils/types.js"
+import { generateUUID } from "./utils/uuid.js"
 
 const app = express()
 app.use(express.json())
@@ -261,7 +262,7 @@ app.post("/create-service", async (req: Request, res: Response) => {
   const newService: ServicoTypeDB = req.body
 
   if (!newService) {
-    res.status(400).json({
+    return res.status(400).json({
       status: "error",
       message: "Dados de servico invalido",
       data: null
@@ -274,7 +275,7 @@ app.post("/create-service", async (req: Request, res: Response) => {
   if (createServiceResponse === null) {
     return res.status(400).json({
       status: "error",
-      message: "Erro criado com sucesso",
+      message: "Erro ao criar servico",
       data: null
     })
   }
@@ -285,7 +286,6 @@ app.post("/create-service", async (req: Request, res: Response) => {
     data: createServiceResponse
   })
 
-  res.json(createServiceResponse)
 })
 
 // rota para obter servico por id
@@ -297,12 +297,13 @@ app.get("/get-service-by-id/:id", async (req: Request, res: Response) => {
       status: "error",
       message: "Dados de servico invalido",
       data: null
+
     })
   }
 
   const getServiceByIdResponse = await getServiceById(id as string)
 
-  if (!getServiceByIdResponse) {
+  if (getServiceByIdResponse === null) {
     return res.status(400).json({
       status: "error",
       message: "Servico nao encontrado",
@@ -317,6 +318,9 @@ app.get("/get-service-by-id/:id", async (req: Request, res: Response) => {
 })
 
 app.get("/get-all-services", async (req: Request, res: Response) => {
+  
+  
+
   const getAllServicesResponse = await getAllServices()
 
   if (!getAllServicesResponse) {
@@ -335,7 +339,7 @@ app.get("/get-all-services", async (req: Request, res: Response) => {
 
 // rota para atualizar rota
 
-app.put("/update_service-by-id/:id", async (req: Request, res: Response) => {
+app.put("/update-service-by-id/:id", async (req: Request, res: Response) => {
   const { id } = req.params
 
   const updatedService: ServicoTypeDB = req.body
@@ -379,20 +383,11 @@ app.put("/update_service-by-id/:id", async (req: Request, res: Response) => {
 app.delete("/delete-service-by-id/:id", async (req: Request, res: Response) => {
   const {id} = req.params
 
-  const deletedService: ServicoTypeDB = req.body
 
   if (!id) {
     return res.status(400).json({
       status: "error",
       message: "Id eh obrigatorio",
-      data: null
-    })
-  }
-
-  if (!deletedService) {
-    return res.status(400).json({
-      status: "error",
-      message: "Dados de servico invalidos",
       data: null
     })
   }
@@ -412,6 +407,7 @@ app.delete("/delete-service-by-id/:id", async (req: Request, res: Response) => {
     data: deleteServiceResponse
   })
 })
+
 
 app.listen(8080, () => {
   console.log("Server running on port 8080")

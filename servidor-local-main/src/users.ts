@@ -1,5 +1,7 @@
 import db from "./lib/db.js"
 import mysql from "mysql2/promise"
+import type { userType } from "./utils/types.js"
+import { generateUUID } from "./utils/uuid.js"
 
 // Trabalhar com base de dados
 // Trabalhar com base de dados
@@ -26,40 +28,40 @@ export async function getUserById(id: string) {
     return Array.isArray(rows) ? rows[0] : null
 }
 
-export async function PostNewUser() {
-    const query = `
+export async function PostNewUser(newUser: userType) {
+    console.log({ newUser })
+    try {
+        const query = `
         INSERT INTO tbl_utilizadores (
             id, nome, numero_identificacao, data_nascimento, 
             email, password, telefone, pais, localidade, 
             enabled, created_at, updated_at
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+    `
 
     const values = [
-        "ba985ad2-09f1-4c79-8cca-876c3693e",
-        "Snow",
-        "N123",
-        "2003-07-18",
-        "lordSnow@gmail.com",
-        "$2a$12$rzwSu5A2tdGTulUrEVmPDeADqluT3STOwf0jo5L79Ecy",
-        "9919213",
-        "The North",
-        "woods",
-        true,
+        generateUUID(),
+        newUser.nome,
+        newUser.numero_identificacao,
+        newUser.data_nascimento,
+        newUser.email,
+        newUser.password,
+        newUser.telefone,
+        newUser.pais,
+        newUser.localidade,
+        newUser.enabled,
         new Date(),
         new Date()
-        
     ];
 
-    try {
-        const [rows] = await db.execute(query, values);
-        console.log("Adicionado com sucesso");
-        return rows;
+    const [rows] = await db.execute(query, values)
+
+    return rows
+
     } catch (error) {
-        console.error("Database error:", error);
-        throw error;
+        console.log(error)
     }
-}
+    
 
 
 export async function deleteUserById(id: string) {

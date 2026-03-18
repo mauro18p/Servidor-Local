@@ -78,11 +78,11 @@ export function obterServico(nome: string): ServicoType | null {
 
 // adiconar servicos em base de dados 
 
-export async function  addServicesToDB(newService: ServicoTypeDB) {
-    console.log({newService})
+export async function addServicesToDB(newService: ServicoTypeDB) {
+    console.log({ newService })
 
     try {
-        const query = 'INSERET INTO tbl_servicos VALUES(?, ?, ?, ?, ?, ?, ?)'
+        const query = 'INSERT INTO tbl_servicos(id, nome, descricao, categoria, enabled, created_at, updated_at)  VALUES(?, ?, ?, ?, ?, ?, ?)'
 
         const values = [
             null,
@@ -92,9 +92,9 @@ export async function  addServicesToDB(newService: ServicoTypeDB) {
             newService.enabled,
             new Date(),
             new Date()
-        ]
+        ];
 
-        const rows = await db.execute(query, values)
+        const [rows] = await db.execute(query, values)
 
         return rows
     } catch (error) {
@@ -112,9 +112,9 @@ export async function getServiceById(id: string) {
 
         const value = [id]
 
-        const rows = await db.execute(query, value)
+        const [rows] = await db.execute(query, value)
 
-        return Array.isArray(rows) && rows.length > 0 ? rows[0] : null  
+        return Array.isArray(rows) && rows.length > 0 ? rows[0] : null
     } catch (error) {
         console.log(error)
     }
@@ -129,7 +129,7 @@ export async function getAllServices() {
 
         const rows = await db.execute(query)
 
-        return Array.isArray(rows && rows.length > 0 ? rows[0] : [])
+        return Array.isArray(rows) && rows.length > 0 ? rows[0] : []
     } catch (error) {
         console.log(error)
         return null
@@ -139,45 +139,45 @@ export async function getAllServices() {
 // atualizar dados de servicos
 
 export async function updateService(id: string, updateService: ServicoTypeDB) {
-try {
-    const query = `UPDATE tbl_servicos
+    try {
+        const query = `UPDATE tbl_servicos
                     SET
-                        nome=?
-                        descricao=?
-                        categoria=?
+                        nome=?,
+                        descricao=?,
+                        categoria=?,
                         enabled=?,
                         updated_at=?
                     WHERE
                         id=?
                     ;`
 
-    const values = [
-        updateService.nome,
-        updateService.descricao,
-        updateService.categoria,
-        updateService.enabled,
-        new Date(),
-        id
-    ]
+        const values = [
+            updateService.nome,
+            updateService.descricao,
+            updateService.categoria,
+            updateService.enabled,
+            new Date(),
+            id
+        ]
 
-    const rows = await db.execute(query, values)
+        const rows = await db.execute(query, values)
 
-    return rows
-} catch (error) {
-    console.log(error)
-    return null
-}
+        return rows
+    } catch (error) {
+        console.log(error)
+        return null
+    }
 }
 
 // apagar servico de base de dados
 
-export async function deleteService(id: string)  {
+export async function deleteService(id: string) {
     try {
         const query = 'DELETE FROM tbl_servicos WHERE id = ?'
 
         const value = [id]
 
-        const rows = await db.execute(query, value)
+        const [rows] = await db.execute(query, value)
 
         return rows
     } catch (error) {
