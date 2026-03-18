@@ -27,7 +27,7 @@ export async function getUserById(id: string) {
     if (Array.isArray(rows) && rows.length === 0) return null
     return Array.isArray(rows) ? rows[0] : null
 }
-
+/*
 export async function PostNewUser(newUser: userType) {
     console.log({ newUser })
     try {
@@ -77,3 +77,4 @@ export async function deleteUserById(id: string) {
 
     return { success: true, deletedId: id };
 }
+*/

@@ -2,7 +2,7 @@ import express, { type Request, type Response } from "express"
 import { addServicesToDB, adicionarServico, apagarServico, deleteService, getAllServices, getServiceById, listarServicos, obterServico, updateService } from "./servico.js"
 import { apagarNomeDoPrestador, calcularOrcamento, editarPrestadorDeServico, listarPrestadores, obterPrestador, selecionarServicos, } from "./orcamento.js"
 import { Prestador, } from "./prestador.js"
-import { deleteUserById, getUserById, getUsers, PostNewUser } from "./users.js"
+import {  getUserById, getUsers } from "./users.js"
 import type { ServicoTypeDB } from "./utils/types.js"
 import { generateUUID } from "./utils/uuid.js"
 
@@ -186,6 +186,7 @@ app.get("/get-user-by-id", async (req: Request, res: Response) => {
 
 
 // rota inserir utilizador
+/*
 app.post("/post-new-user", async (req: Request, res: Response) => {
   const PostNewUserResponse = await PostNewUser()
 
@@ -244,7 +245,7 @@ app.get("/delete-user-by-id", async (req: Request, res: Response) => {
   }
 
 })
-
+*/
 
 // rota para inserir prestador
 
