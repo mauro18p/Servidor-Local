@@ -44,11 +44,11 @@ export interface PrestNome {
 
 
 
-export interface userType {
+export interface userTypeDB {
     id: string
     nome: string
     numero_identificacao: string
-    data_nascimento: Date
+    data_nascimento: string
     email: string
     telefone: string
     pais: string
