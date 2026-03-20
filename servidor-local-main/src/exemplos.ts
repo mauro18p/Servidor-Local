@@ -1,5 +1,5 @@
 import express from "express";
-
+/*
 const app = express();
 
 interface AlunosType {
@@ -140,3 +140,4 @@ interface ServicoType {
 }
 
 let catalogoServicos: ServicoType[] = []
+*/
