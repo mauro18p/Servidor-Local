@@ -2,7 +2,6 @@ import db from "./lib/db.js"
 import mysql from "mysql2/promise"
 import type { ServicoTypeDB, userTypeDB } from "./utils/types.js"
 import { generateUUID } from "./utils/uuid.js"
-import { hash } from "bcrypt"
 import { hashPassword } from "./utils/password.js"
 import { formatDate, formatDateDDMMYYY } from "./utils/date.js"
 
@@ -11,7 +10,6 @@ import { formatDate, formatDateDDMMYYY } from "./utils/date.js"
 // Trabalhar com base de dados
 // Trabalhar com base de dados
 // Trabalhar com base de dados
-
 
 
 

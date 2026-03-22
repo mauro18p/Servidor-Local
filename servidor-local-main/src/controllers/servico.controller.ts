@@ -42,7 +42,7 @@ export const serviceController = {
         if (!getAllServicesResponse) {
             return res.status(400).json({
                 status: "error",
-                message: "Erro ao selicionar servico",
+                message: "Erro ao encontrar servicos",
                 data: null
             })
         }
@@ -57,7 +57,7 @@ export const serviceController = {
     async get(req: Request, res: Response) {
         const { id } = req.params
 
-        const updatedService: ServicoTypeDB = req.body
+        const getUser: ServicoTypeDB = req.body
 
         if (!id) {
             return res.status(400).json({
@@ -67,7 +67,7 @@ export const serviceController = {
             })
         }
 
-        if (!updatedService) {
+        if (!getUser) {
             return res.status(400).json({
                 status: "error",
                 message: "Dados de servico invalidos",
@@ -75,9 +75,9 @@ export const serviceController = {
             })
         }
 
-        const updateServiceResponse = await ServiceModel.update(id as string, updatedService)
+        const getUserResponse = await ServiceModel.get(id as string)
 
-        if (!updateServiceResponse) {
+        if (!getUserResponse) {
             return res.status(400).json({
                 status: "error",
                 message: "Erro ao atualizar servico",
@@ -87,7 +87,7 @@ export const serviceController = {
         return res.status(200).json({
             status: "success",
             message: "Servico atualizado com sucesso",
-            data: updateServiceResponse
+            data: getUserResponse
         })
 
     },
@@ -96,7 +96,7 @@ export const serviceController = {
     async update(req: Request, res: Response) {
         const { id } = req.params
 
-        const updatedService: ServicoTypeDB = req.body
+        const UpdateUser: ServicoTypeDB = req.body
 
         if (!id) {
             return res.status(400).json({
@@ -106,7 +106,7 @@ export const serviceController = {
             })
         }
 
-        if (!updatedService) {
+        if (!UpdateUser) {
             return res.status(400).json({
                 status: "error",
                 message: "Dados de servico invalidos",
@@ -114,9 +114,9 @@ export const serviceController = {
             })
         }
 
-        const updateServiceResponse = await ServiceModel.update(id as string, updatedService)
+        const UpdateUserResponse = await ServiceModel.update(id as string, UpdateUser)
 
-        if (!updateServiceResponse) {
+        if (!UpdateUserResponse) {
             return res.status(400).json({
                 status: "error",
                 message: "Erro ao atualizar servico",
@@ -126,7 +126,7 @@ export const serviceController = {
         return res.status(200).json({
             status: "success",
             message: "Servico atualizado com sucesso",
-            data: updateServiceResponse
+            data: UpdateUserResponse
         })
     },
 
