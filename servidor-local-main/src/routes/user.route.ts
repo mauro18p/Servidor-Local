@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { create } from "node:domain";
-import { serviceController } from "../controllers/servico.controller.js";
+import { UserController } from "../controllers/user.controller.js"
 
 
 const userRoute = {
@@ -13,10 +12,10 @@ const userRoute = {
 
 const router = Router()
 
-router.get(userRoute.getAll, serviceController.getAll)
-router.get(userRoute.getById, serviceController.get)
-router.post(userRoute.create, serviceController.create)
-router.put(userRoute.update, serviceController.update)
-router.delete(userRoute.delete, serviceController.delete)
+router.get(userRoute.getAll, UserController.getAll)
+router.get(userRoute.getById, UserController.get)
+router.post(userRoute.create, UserController.create)
+router.put(userRoute.update, UserController.update)
+router.delete(userRoute.delete, UserController.delete)
 
 export {router}

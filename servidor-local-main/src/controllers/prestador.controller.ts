@@ -1,62 +1,62 @@
 import type { Request, Response } from "express";
-import { UserModel } from "../models/user.model.js"
-import type { userTypeDB } from "../utils/types.js"
+import type { PrestadorTypeDB } from "../utils/types.js";
+import { FreelancerModel } from "../models/prestador.model.js";
 
-export const UserController = {
+export const FreelancerController = {
 
-    // criar um novo utilizador
+    // criar um novo Freelancer
     async create(req: Request, res: Response) {
-        const newUser: userTypeDB = req.body
+        const newFreelancer: PrestadorTypeDB = req.body
 
-        if (!newUser) {
+        if (!newFreelancer) {
             return res.status(400).json({
                 status: "error",
-                message: "Dados de utilizador invalido",
+                message: "Dados de Freelancer invalido",
                 data: null
             })
         } else
-            console.log(newUser)
+            console.log(newFreelancer)
 
-        const createNewService = await UserModel.create(newUser)
+        const createServiceResponse = await FreelancerModel.create(newFreelancer)
 
-        if (createNewService === null) {
+        if (createServiceResponse === null) {
             return res.status(400).json({
                 status: "error",
-                message: "Erro ao criar utilizador",
+                message: "Erro ao criar Freelancer",
                 data: null
             })
         }
 
         return res.status(200).json({
             status: "sucesso",
-            message: "utilizador adicionado",
-            data: createNewService
+            message: "Freelancer adicionado",
+            data: createServiceResponse
         })
     },
 
-    // listar todos os utilizadors
+    // listar todos os Freelancers
     async getAll(req: Request, res: Response) {
-        const getAllUsersResponse = await UserModel.getAll()
+        const getAllServicesResponse = await FreelancerModel.getAll()
 
-        if (!getAllUsersResponse) {
+        if (!getAllServicesResponse) {
             return res.status(400).json({
                 status: "error",
-                message: "Erro ao encontrar utilizadores",
+                message: "Erro ao encontrar Freelancers",
                 data: null
             })
         }
         return res.status(200).json({
             status: "sucesso",
-            mensagem: "utilizadores encontrado",
-            data: getAllUsersResponse
+            mensagem: "Freelancers encontrado",
+            data: getAllServicesResponse
         })
     },
 
-    // selecionar utilizador por id
+    // selecionar Freelancer por id
     async get(req: Request, res: Response) {
         const { id } = req.params
 
-        const getUser: userTypeDB = req.body
+        const getUser: PrestadorTypeDB = req.body
 
         if (!id) {
             return res.status(400).json({
@@ -69,33 +69,33 @@ export const UserController = {
         if (!getUser) {
             return res.status(400).json({
                 status: "error",
-                message: "Dados de utilizador invalidos",
+                message: "Dados de Freelancer invalidos",
                 data: null
             })
         }
 
-        const getUserResponse = await UserModel.update(id as string, getUser)
+        const getUserResponse = await FreelancerModel.get(id as string)
 
         if (!getUserResponse) {
             return res.status(400).json({
                 status: "error",
-                message: "Erro ao atualizar utilizador",
+                message: "Erro ao atualizar Freelancer",
                 data: null
             })
         }
         return res.status(200).json({
             status: "success",
-            message: "utilizador atualizado com sucesso",
+            message: "Freelancer atualizado com sucesso",
             data: getUserResponse
         })
 
     },
 
-    // atualizar dados de utilizadors
+    // atualizar dados de Freelancers
     async update(req: Request, res: Response) {
         const { id } = req.params
 
-        const UpdateUser: userTypeDB = req.body
+        const UpdateUser: PrestadorTypeDB = req.body
 
         if (!id) {
             return res.status(400).json({
@@ -108,28 +108,28 @@ export const UserController = {
         if (!UpdateUser) {
             return res.status(400).json({
                 status: "error",
-                message: "Dados de utilizador invalidos",
+                message: "Dados de Freelancer invalidos",
                 data: null
             })
         }
 
-        const UpdateUserResponse = await UserModel.update(id as string, UpdateUser)
+        const UpdateUserResponse = await FreelancerModel.update(id as string, UpdateUser)
 
         if (!UpdateUserResponse) {
             return res.status(400).json({
                 status: "error",
-                message: "Erro ao atualizar utilizador",
+                message: "Erro ao atualizar Freelancer",
                 data: null
             })
         }
         return res.status(200).json({
             status: "success",
-            message: "utilizador atualizado com sucesso",
+            message: "Freelancer atualizado com sucesso",
             data: UpdateUserResponse
         })
     },
 
-    // apagar utilizador de base de dados
+    // apagar Freelancer de base de dados
     async delete(req: Request, res: Response) {
         const { id } = req.params
 
@@ -142,19 +142,22 @@ export const UserController = {
             })
         }
 
-        const deleteUserResponse = await UserModel.delete(id as string)
+        const deleteServiceResponse = await FreelancerModel.delete(id as string)
 
-        if (!deleteUserResponse) {
+        if (!deleteServiceResponse) {
             return res.status(400).json({
                 status: "error",
-                message: "Erro ao apagar utilizador",
+                message: "Erro ao apagar Freelancer",
                 data: null
             })
         }
         return res.status(200).json({
             status: "success",
-            message: "utilizador apagado com sucesso",
-            data: deleteUserResponse
+            message: "Freelancer apagado com sucesso",
+            data: deleteServiceResponse
         })
     }
 }
+
+
+

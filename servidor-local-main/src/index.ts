@@ -5,6 +5,8 @@ const app = express()
 app.use(express.json())
 
 app.use("/service", router)
+app.use("/user", router)
+app.use("/freelancer", router)
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!")

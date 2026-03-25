@@ -41,9 +41,11 @@ export const ServiceModel = {
 
     async get(id: string) {
         try {
-            const query = 'SELECT * FROM tbl_servicos'
+            const query = 'SELECT * FROM tbl_servicos WHERE id = ?'
 
-            const rows = await db.execute(query)
+            const value = [id]
+
+            const rows = await db.execute(query, value)
 
             return Array.isArray(rows) && rows.length > 0 ? rows[0] : []
         } catch (error) {

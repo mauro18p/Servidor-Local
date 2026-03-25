@@ -50,7 +50,7 @@ export const UserModel = {
 
     async get(id: string) {
         try {
-            const query = 'SELECT * FROM tbl_servicos'
+            const query = 'SELECT * FROM tbl_utilizadores WHERE id = ?'
 
             const rows = await db.execute(query)
 
