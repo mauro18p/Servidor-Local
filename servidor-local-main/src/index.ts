@@ -7,6 +7,9 @@ app.use(express.json())
 app.use("/service", router)
 app.use("/user", router)
 app.use("/freelancer", router)
+app.use("/orcamento", router)
+app.use("/prestacao-servico", router)
+app.use("/proposta", router)
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!")
