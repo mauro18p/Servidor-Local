@@ -10,12 +10,12 @@ const ServiceRoute = {
     delete:"/delete/:id"
 }
 
-const router = Router()
+const ServiceRouter = Router()
 
-router.get(ServiceRoute.getAll, serviceController.getAll)
-router.get(ServiceRoute.getById, serviceController.get)
-router.post(ServiceRoute.create, serviceController.create)
-router.put(ServiceRoute.update, serviceController.update)
-router.delete(ServiceRoute.delete, serviceController.delete)
+ServiceRouter.get(ServiceRoute.getAll, serviceController.getAll)
+ServiceRouter.get(ServiceRoute.getById, serviceController.get)
+ServiceRouter.post(ServiceRoute.create, serviceController.create)
+ServiceRouter.put(ServiceRoute.update, serviceController.update)
+ServiceRouter.delete(ServiceRoute.delete, serviceController.delete)
 
-export {router}
+export { ServiceRouter }

@@ -9,12 +9,12 @@ const FreelancerRoute = {
     delete:"/delete/:id"
 }
 
-const router = Router()
+const FreelancerRouter = Router()
 
-router.get(FreelancerRoute.getAll, FreelancerController.getAll)
-router.get(FreelancerRoute.getById, FreelancerController.get)
-router.post(FreelancerRoute.create, FreelancerController.create)
-router.put(FreelancerRoute.update, FreelancerController.update)
-router.delete(FreelancerRoute.delete, FreelancerController.delete)
+FreelancerRouter.get(FreelancerRoute.getAll, FreelancerController.getAll)
+FreelancerRouter.get(FreelancerRoute.getById, FreelancerController.get)
+FreelancerRouter.post(FreelancerRoute.create, FreelancerController.create)
+FreelancerRouter.put(FreelancerRoute.update, FreelancerController.update)
+FreelancerRouter.delete(FreelancerRoute.delete, FreelancerController.delete)
 
-export {router}
+export {FreelancerRouter}

@@ -2,8 +2,7 @@
 
 components:
   schemas:
-  # schema principal de servico
-    servico:
+    Service:
       type: object
       properties:
         id:
@@ -15,18 +14,45 @@ components:
         descricao:
           type: string
           example: "Serviço de limpeza profissional para residências e "
-        categoria:  
+        categoria:
           type: string
           example: "Limpeza"
         enabled:
           type: boolean
           example: true
-        created_at: 
+        created_at:
           type: string
           example: "2010-12-10T00:00:00.000Z"
           updated_at:
             typr: string
-            example: "2010-12-10T00:00.000Z" 
+            example: "2010-12-10T00:00.000Z"
+  
+    CreateSrvice:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: "Servico de limpeza"
+        descricao:
+          type: string
+          example: "Servico de limpeza profissional para residencia e empresa"
+        categoria:
+          type: string
+          example: "Limpeza"
+        enabled:
+          type: boolean
+          example: true
+
+    #Schema generico para sucesso
+    ResponseSucess:
+      ttpe: object
+      propreties:
+        message:
+          type: string
+          example: "Servico criado com sucesso"
+        status:
+          type: boolean
+          example: true
 
     #servico generico de resposta de erro
     ResponseError:
@@ -39,6 +65,4 @@ components:
           type: boolean
           example: false
         data:
-          type: object            
-
-          
+          type: object

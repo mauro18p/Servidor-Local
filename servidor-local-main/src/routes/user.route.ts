@@ -10,12 +10,12 @@ const userRoute = {
     delete:"/delete/:id"
 }
 
-const router = Router()
+const UserRouter = Router()
 
-router.get(userRoute.getAll, UserController.getAll)
-router.get(userRoute.getById, UserController.get)
-router.post(userRoute.create, UserController.create)
-router.put(userRoute.update, UserController.update)
-router.delete(userRoute.delete, UserController.delete)
+UserRouter.get(userRoute.getAll, UserController.getAll)
+UserRouter.get(userRoute.getById, UserController.get)
+UserRouter.post(userRoute.create, UserController.create)
+UserRouter.put(userRoute.update, UserController.update)
+UserRouter.delete(userRoute.delete, UserController.delete)
 
-export {router}
+export {UserRouter}

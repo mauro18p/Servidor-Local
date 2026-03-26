@@ -9,12 +9,12 @@ const OrcamentoRoute = {
     delete: "/delete/:id"
 }
 
-const router = Router()
+const OrcamentoRouter = Router()
 
-router.post(OrcamentoRoute.create, OrcamentoController.create)
-router.get(OrcamentoRoute.getAll, OrcamentoController.getAll)
-router.get(OrcamentoRoute.getById, OrcamentoController.get)
-router.put(OrcamentoRoute.update, OrcamentoController.update)
-router.delete(OrcamentoRoute.delete, OrcamentoController.delete)
+OrcamentoRouter.post(OrcamentoRoute.create, OrcamentoController.create)
+OrcamentoRouter.get(OrcamentoRoute.getAll, OrcamentoController.getAll)
+OrcamentoRouter.get(OrcamentoRoute.getById, OrcamentoController.get)
+OrcamentoRouter.put(OrcamentoRoute.update, OrcamentoController.update)
+OrcamentoRouter.delete(OrcamentoRoute.delete, OrcamentoController.delete)
 
-export { router }
+export { OrcamentoRouter }

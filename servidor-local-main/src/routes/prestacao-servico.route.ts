@@ -9,12 +9,12 @@ const PrestacaoServicoRoute = {
     delete: "/delete/:id"
 }
 
-const router = Router()
+const PrestacaoServicoRouter = Router()
 
-router.post(PrestacaoServicoRoute.create, PrestacaoServicoController.create)
-router.get(PrestacaoServicoRoute.getAll, PrestacaoServicoController.getAll)
-router.get(PrestacaoServicoRoute.getById, PrestacaoServicoController.get)
-router.put(PrestacaoServicoRoute.update, PrestacaoServicoController.update)
-router.delete(PrestacaoServicoRoute.delete, PrestacaoServicoController.delete)
+PrestacaoServicoRouter.post(PrestacaoServicoRoute.create, PrestacaoServicoController.create)
+PrestacaoServicoRouter.get(PrestacaoServicoRoute.getAll, PrestacaoServicoController.getAll)
+PrestacaoServicoRouter.get(PrestacaoServicoRoute.getById, PrestacaoServicoController.get)
+PrestacaoServicoRouter.put(PrestacaoServicoRoute.update, PrestacaoServicoController.update)
+PrestacaoServicoRouter.delete(PrestacaoServicoRoute.delete, PrestacaoServicoController.delete)
 
-export { router }
+export { PrestacaoServicoRouter }

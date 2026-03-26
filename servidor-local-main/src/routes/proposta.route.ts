@@ -2,12 +2,21 @@
 import { Router } from "express"
 import { PropostaController } from "../controllers/proposta.controller.js"
 
-const router = Router()
 
-router.post("/", PropostaController.create)
-router.get("/", PropostaController.getAll)
-router.get("/:id", PropostaController.get)
-router.put("/:id", PropostaController.update)
-router.delete("/:id", PropostaController.delete)
+const PropostaRoute = {
+    create:"/create",
+    getAll:"/",
+    getById:"/get-by-id/:id",
+    update:"/update/:id",
+    delete:"/delete/:id"
+}
 
-export { router }
+const PropostaRouter = Router()
+
+PropostaRouter.post(PropostaRoute.create, PropostaController.create)
+PropostaRouter.get(PropostaRoute.getAll, PropostaController.getAll)
+PropostaRouter.get(PropostaRoute.getById, PropostaController.get)
+PropostaRouter.put(PropostaRoute.update, PropostaController.update)
+PropostaRouter.delete(PropostaRoute.delete, PropostaController.delete)
+
+export { PropostaRouter }
