@@ -3,6 +3,8 @@ paths:
   /user:
     get:
       summary: Listar todos os utilizadores
+      tags:
+        - Utilizador
       description: Retorna uma lista de todos os utilizadores disponíveis
       responses:
         "200":
@@ -23,6 +25,8 @@ paths:
   /user/create:
     post:
       summary: Criar um novo utilizador
+      tags:
+        - Utilizador
       description: Cria um novo utilizador
       requestBody:
         required: true
@@ -47,6 +51,8 @@ paths:
   /user/get-by-id/{id}:
     get:
       summary: Buscar um utilizador por ID
+      tags:
+        - Utilizador
       description: Retorna um utilizador especificado pelo ID
       parameters:
         - name: id
@@ -74,6 +80,8 @@ paths:
   /user/update/{id}:
     put:
       summary: Actualizar um utiliazdor por ID
+      tags:
+        - Utilizador
       description: Actualiza um utilizador especificado pelo ID
       parameters:
         - name: id
@@ -115,6 +123,8 @@ paths:
   /user/delete/{id}:
     delete:
       summary: Apaga um utilizador
+      tags:
+        - Utilizador
       description: Apaga um utilizador especificado pelo ID
       parameters:
         - name: id

@@ -3,6 +3,8 @@ paths:
   /prestacao:
     get:
       summary: Listar todos as prestacoes
+      tags:
+        - Prestacao
       description: Retorna uma lista de todos as prestacoes disponíveis
       responses:
         "200":
@@ -23,6 +25,8 @@ paths:
   /prestacao/create:
     post:
       summary: Criar um novo prestacao
+      tags:
+        - Prestacao
       description: Cria um novo prestacao
       requestBody:
         required: true
@@ -47,6 +51,8 @@ paths:
   /prestacao/get-by-id/{id}:
     get:
       summary: Buscar um prestacao por ID
+      tags:
+        - Prestacao
       description: Retorna um prestacao especificado pelo ID
       parameters:
         - name: id
@@ -74,6 +80,8 @@ paths:
   /prestacao/update/{id}:
     put:
       summary: Actualizar um utiliazdor por ID
+      tags:
+        - Prestacao
       description: Actualiza um prestacao especificado pelo ID
       parameters:
         - name: id
@@ -115,6 +123,8 @@ paths:
   /prestacao/delete/{id}:
     delete:
       summary: Apaga um prestacao
+      tags:
+        - Prestacao
       description: Apaga um prestacao especificado pelo ID
       parameters:
         - name: id

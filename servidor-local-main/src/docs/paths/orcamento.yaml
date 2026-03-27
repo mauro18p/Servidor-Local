@@ -3,6 +3,8 @@ paths:
   /orcamento:
     get:
       summary: Listar todos os orcamento
+      tags:
+        - Orcamento
       description: Retorna uma lista de todos os orcamento disponíveis
       responses:
         "200":
@@ -23,6 +25,8 @@ paths:
   /orcamento/create:
     post:
       summary: Criar um novo orcamento
+      tags:
+        - Orcamento
       description: Cria um novo orcamento
       requestBody:
         required: true
@@ -47,6 +51,8 @@ paths:
   /orcamento/get-by-id/{id}:
     get:
       summary: Buscar um orcamento por ID
+      tags:
+        - Orcamento
       description: Retorna um orcamento especificado pelo ID
       parameters:
         - name: id
@@ -74,6 +80,8 @@ paths:
   /orcamento/update/{id}:
     put:
       summary: Actualizar um orcamento por ID
+      tags:
+        - Orcamento
       description: Actualiza um orcamento especificado pelo ID
       parameters:
         - name: id
@@ -115,6 +123,8 @@ paths:
   /orcamento/delete/{id}:
     delete:
       summary: Apaga um orcamento
+      tags:
+        - Orcamento
       description: Apaga um orcamento especificado pelo ID
       parameters:
         - name: id

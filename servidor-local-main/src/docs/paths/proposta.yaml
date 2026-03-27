@@ -3,6 +3,8 @@ paths:
   /proposta:
     get:
       summary: Listar todos as propostas
+      tags:
+        - Proposta
       description: Retorna uma lista de todos as propostas disponíveis
       responses:
         "200":
@@ -23,6 +25,8 @@ paths:
   /proposta/create:
     post:
       summary: Criar um novo proposta
+      tags:
+        - Proposta
       description: Cria um novo proposta
       requestBody:
         required: true
@@ -47,6 +51,8 @@ paths:
   /proposta/get-by-id/{id}:
     get:
       summary: Buscar um proposta por ID
+      tags:
+        - Proposta
       description: Retorna um proposta especificado pelo ID
       parameters:
         - name: id
@@ -74,6 +80,8 @@ paths:
   /proposta/update/{id}:
     put:
       summary: Actualizar um proposta por ID
+      tags:
+        - Proposta
       description: Actualiza um proposta especificado pelo ID
       parameters:
         - name: id
@@ -115,6 +123,8 @@ paths:
   /proposta/delete/{id}:
     delete:
       summary: Apaga um proposta
+      tags:
+        - Proposta
       description: Apaga um proposta especificado pelo ID
       parameters:
         - name: id
