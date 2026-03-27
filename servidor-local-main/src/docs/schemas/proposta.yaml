@@ -1,22 +1,25 @@
-#schema/servico.yaml
+#schema/proposta.yaml
 
 components:
   schemas:
-    Service:
+    Proposta:
       type: object
       properties:
         id:
           type: integer
           example: 1
-        nome:
+        id_prestacao_servico:
           type: string
-          example: "Serviço de Limpeza"
-        descricao:
+          example: 1
+        preco_hora:
+          type: number
+          example: 10000
+        horas_estimadas:
+          type: number
+          example: 12
+        estado:
           type: string
-          example: "Serviço de limpeza profissional para residências e "
-        categoria:
-          type: string
-          example: "Limpeza"
+          example: aceito
         enabled:
           type: boolean
           example: true
@@ -27,25 +30,29 @@ components:
             typr: string
             example: "2010-12-10T00:00.000Z"
   
-    CreateService:
+    CreateProposta:
       type: object
       properties:
-        nome:
+        id_prestacao_servico:
           type: string
-          example: "Servico de limpeza"
-        descricao:
+          example: 1
+        preco_hora:
+          type: number
+          example: 10000
+        horas_estimadas:
+          type: number
+          example: 12
+        estado:
           type: string
-          example: "Servico de limpeza profissional para residencia e empresa"
-        categoria:
-          type: string
-          example: "Limpeza"
+          example: aceito
         enabled:
           type: boolean
           example: true
       required:
-        - nome
-        - descricao
-        - categoria
+        - id_prestacao_servico
+        - preco_hora
+        - horas_estimadas
+        - estado
         - enabled
 
     #Schema generico para sucesso
@@ -59,7 +66,7 @@ components:
           type: boolean
           example: true
 
-    #servico generico de resposta de erro
+    #proposta generico de resposta de erro
     ResponseError:
       type: object
       properties:

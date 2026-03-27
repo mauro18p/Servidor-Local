@@ -50,10 +50,10 @@ export interface userTypeDB {
     numero_identificacao: string
     data_nascimento: string
     email: string
+    password: string
     telefone: string
     pais: string
     localidade: string
-    password: string
     enabled: boolean
     created_at: string
     update_at: string

@@ -1,0 +1,141 @@
+# paths/user.yaml
+paths:
+  /user:
+    get:
+      summary: Listar todos os utilizadores
+      description: Retorna uma lista de todos os utilizadores disponíveis
+      responses:
+        "200":
+          description: Lista de utilizadores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "404":
+          description: "Nenhum utilizador encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
+
+  /user/create:
+    post:
+      summary: Criar um novo utilizador
+      description: Cria um novo utilizador
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUser"
+      responses:
+        "200":
+          description: Utilizador criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSucess"
+        "400":
+          description: Erro ao criar utilizador
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
+
+  /user/get-by-id/{id}:
+    get:
+      summary: Buscar um utilizador por ID
+      description: Retorna um utilizador especificado pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do utilizador
+          schema:
+            type: integer
+            example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+      responses:
+        "200":
+          description: Utilizador encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSucess"
+        "404":
+          description: Utilizador nao encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseError"
+  /user/update/{id}:
+    put:
+      summary: Actualizar um utiliazdor por ID
+      description: Actualiza um utilizador especificado pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do utilizador
+          schema:
+            type: integer
+            example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $href: "#/components/schemas/CreateUser" #tem mesma informacao de CreateUser
+      responses:
+        "200":
+          description: Utilizador actualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSucess"
+        "400":
+          description: Dados invalidos
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseError"
+        "404":
+          description: Utilizador nao encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseError"
+  /user/delete/{id}:
+    delete:
+      summary: Apaga um utilizador
+      description: Apaga um utilizador especificado pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do utilizador
+          schema:
+            type: integer
+            example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+      responses:
+        "200":
+          description: Utilizador apagado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSucess"
+        "404":
+          description: Utilizador nao encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseError"

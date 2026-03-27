@@ -1,22 +1,19 @@
-#schema/servico.yaml
+#schema/orcamento.yaml
 
 components:
   schemas:
-    Service:
+    Orcamento:
       type: object
       properties:
         id:
-          type: integer
-          example: 1
-        nome:
           type: string
-          example: "Serviço de Limpeza"
-        descricao:
+          example: 2
+        total:
+          type: number
+          example: 1000
+        id_utilizadores:
           type: string
-          example: "Serviço de limpeza profissional para residências e "
-        categoria:
-          type: string
-          example: "Limpeza"
+          example: "M002b "
         enabled:
           type: boolean
           example: true
@@ -27,26 +24,22 @@ components:
             typr: string
             example: "2010-12-10T00:00.000Z"
   
-    CreateService:
+    CreateOrcamento:
       type: object
       properties:
-        nome:
+        total:
+          type: number
+          example: 1000
+        id_utilizadores:
           type: string
-          example: "Servico de limpeza"
-        descricao:
-          type: string
-          example: "Servico de limpeza profissional para residencia e empresa"
-        categoria:
-          type: string
-          example: "Limpeza"
+          example: "M002b "
         enabled:
           type: boolean
           example: true
       required:
-        - nome
-        - descricao
-        - categoria
-        - enabled
+        - total  
+        - id_utilizadores  
+        - enabled  
 
     #Schema generico para sucesso
     ResponseSucess:
@@ -54,18 +47,18 @@ components:
       propreties:
         message:
           type: string
-          example: "Servico criado com sucesso"
+          example: "Orcamento criado com sucesso"
         status:
           type: boolean
           example: true
 
-    #servico generico de resposta de erro
+    #orcamento generico de resposta de erro
     ResponseError:
       type: object
       properties:
         message:
           type: string
-          example: "Erro ao buscar serviços"
+          example: "Erro ao buscar Orcamento"
         status:
           type: boolean
           example: false
