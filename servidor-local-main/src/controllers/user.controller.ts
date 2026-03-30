@@ -1,6 +1,8 @@
 import type { Request, Response } from "express";
 import { UserModel } from "../models/user.model.js"
 import type { userTypeDB } from "../utils/types.js"
+import { comparePassword } from "../utils/password.js";
+import  jwt  from "jsonwebtoken";
 
 export const UserController = {
 
@@ -128,6 +130,50 @@ export const UserController = {
             data: UpdateUserResponse
         })
     },
+
+    // login
+    async login(req: Request, res: Response) {
+        const { email, password } = req.body
+
+        if (!email || !password) {
+
+            return res.status(400).json({
+                status: "error",
+                message: "Credenciais invalidos",
+                data: null
+            })
+        }
+
+        const userData = await UserModel.getByEmail(email as string)
+
+        if (!userData) {
+
+            return res.status(404).json({
+                status: "error",
+                mensagem: "Não existe nenhuma conta com esse email",
+                data: null
+            })
+        }
+
+        const IsPasswordValid = await comparePassword(password, userData.password)
+
+        if (!IsPasswordValid) {
+            
+            return res.status(401).json({
+                status: "error",
+                mensagem: "Credenciais invalidos"
+            })
+        }
+
+        const payload = {
+            id: userData.id,
+            email: userData.email,
+            nome: userData.nome
+        }
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: "1h"})
+    },
+
 
     // apagar utilizador de base de dados
     async delete(req: Request, res: Response) {

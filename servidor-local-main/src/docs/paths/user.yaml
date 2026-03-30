@@ -60,7 +60,7 @@ paths:
           required: true
           description: ID do utilizador
           schema:
-            type: integer
+            type: string
             example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
       responses:
         "200":
@@ -89,7 +89,7 @@ paths:
           required: true
           description: ID do utilizador
           schema:
-            type: integer
+            type: string
             example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
       requestBody:
         required: true

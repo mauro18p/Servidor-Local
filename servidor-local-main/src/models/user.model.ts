@@ -61,6 +61,22 @@ export const UserModel = {
         }
     },
 
+        async getByEmail(email: string): Promise<userTypeDB | null> {
+         try {
+            const [rows] = await db.execute(
+                `SELECT * FROM tbl_utilizadores
+                WHERE tbl_utilizadores.email = ?`,
+                [email]
+            )
+
+            if (Array.isArray(rows) && rows.length === 0) return null
+            return Array.isArray(rows) ? rows[0] as userTypeDB : null
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    },
+
     async update(id: string, updateUser: userTypeDB) {
             try {
         const query = `UPDATE tbl_utilizadores
@@ -101,6 +117,7 @@ export const UserModel = {
         return null
     }
 },
+
 
     async delete(id: string) {
         try {
