@@ -1,4 +1,4 @@
-# paths/user.yaml
+# paths/user.yaml kk
 paths:
   /user:
     get:
