@@ -7,10 +7,16 @@ import { PrestacaoServicoRouter } from "./routes/prestacao-servico.route.js"
 import { PropostaRouter } from "./routes/proposta.route.js"
 import { swaggerSpec } from "./docs/swagger.js"
 import swaggerUI from "swagger-ui-express"
+import dotenv from "dotenv"
 
 
 const app = express()
 app.use(express.json())
+
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }))
+
+dotenv.config()
 
 app.use("/service", ServiceRouter)
 app.use("/user", UserRouter)

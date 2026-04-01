@@ -149,3 +149,39 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
+  /user/login:
+    post:
+      summary: Login de um utilizador
+      tags:
+        - Utilizador
+      description: Faz login do utilizadores
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginUser"
+      responses:
+        "200":
+          description: Utilizador apagado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSucess"
+        "404":
+          description: Utilizador nao encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseError"
+        "400":
+          description: Erro ao logar utilizador
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseError"
+
+    
