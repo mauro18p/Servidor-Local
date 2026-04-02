@@ -90,6 +90,29 @@ export const OrcamentoModel = {
             console.log(err)
             return null
         }
+    },
+
+    async calcular(orcamento: OrcamentoDBType) {
+         try {
+            const [rows] = await db.execute(
+                `INSERT INTO tbl_orcamento 
+                VALUES (?, ?, ?, ?, ?, ?)`,
+
+                [
+                    generateUUID(),
+                    orcamento.total,
+                    orcamento.id_utilizadores,
+                    orcamento.enabled,
+                    new Date(),
+                    new Date()
+                ]
+            )
+            console.log({ rows })
+            return rows
+        } catch (err) {
+            console.log(err)
+            return null
+        }
     }
 }
 

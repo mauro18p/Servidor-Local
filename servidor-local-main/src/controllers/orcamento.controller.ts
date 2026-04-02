@@ -142,5 +142,12 @@ export const OrcamentoController = {
             message: "Orcamento apagado com sucesso",
             data: deleteOrcamentoResponse
         })
+    },
+
+    async Calulo(req: Request, res: Response) {
+        
     }
+    
 }
+
+    
