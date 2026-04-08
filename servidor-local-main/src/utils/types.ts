@@ -93,6 +93,20 @@ export interface OrcamentoDBType {
     updated_at: string
 }
 
+
+export enum EstadoProposta {
+    PENDENTE = "pendente",
+    ACEITE = "aceite",
+    RECUSADA = "recusada"
+}
+
+export enum EstadoPrestacaoServico {
+    PENDENTE = "pendente",
+    EM_ANDAMENTO = "em_andamento",
+    CONCLUIDA = "concluida",
+    CANCELADA = "cancelada"
+}
+
 export interface PrestacaoServicoDBType {
     id: string,
     designacao: string,
@@ -101,7 +115,7 @@ export interface PrestacaoServicoDBType {
     id_prestador: string,
     id_servico: string,
     preco_hora: number,
-    estado: string,
+    estado: EstadoPrestacaoServico,
     id_orcamento: string,
     enabled: boolean,
     created_at: string,
@@ -113,7 +127,7 @@ export interface PropostaDBType {
     id_prestacao_servico: string,
     preco_hora: number,
     horas_estimadas: number,
-    estado: string,
+    estado: EstadoProposta,
     enabled: boolean,
     created_at: string,
     updated_at: string

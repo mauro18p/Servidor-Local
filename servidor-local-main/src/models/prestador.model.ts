@@ -1,5 +1,5 @@
 import db from "../lib/db.js";
-import type { PrestadorTypeDB } from "../utils/types.js";
+import type { PrestacaoServicoDBType, PrestadorTypeDB } from "../utils/types.js";
 import { generateUUID } from "../utils/uuid.js";
 
 
@@ -113,7 +113,8 @@ export const FreelancerModel = {
             console.log(error)
             return null
         }
-    }
+    },
+
 };
 
 

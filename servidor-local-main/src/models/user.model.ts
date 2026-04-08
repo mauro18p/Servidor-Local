@@ -62,7 +62,7 @@ export const UserModel = {
     },
 
         async getByEmail(email: string): Promise<userTypeDB | null> {
-         try {
+        try {
             const [rows] = await db.execute(
                 `SELECT * FROM tbl_utilizadores
                 WHERE tbl_utilizadores.email = ?`,
