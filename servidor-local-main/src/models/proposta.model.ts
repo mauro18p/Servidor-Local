@@ -8,7 +8,7 @@ export const PropostaModel = {
     async create(proposta: PropostaDBType) {
         try {
             const [rows] = await db.execute(
-                `INSERT INTO tbl_propostas 
+                `INSERT INTO tbl_proposta
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
 
                 [

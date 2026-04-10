@@ -6,10 +6,10 @@ export interface PedidoServicoType {
     urgente: boolean;
 }
 
-export interface ResponseType {
-    status: boolean,
+export interface ResponseType<T> {
+    status: "success" | "error",
     message: string,
-    data: ServicoType | null,
+    data: T | null,
 }
 
 export interface ServicoType {
@@ -103,6 +103,7 @@ export interface PrestacaoServicoDBType {
     preco_hora: number,
     estado: string,
     id_orcamento: string,
+    urgente: boolean,
     enabled: boolean,
     created_at: string,
     updated_at: string
@@ -117,4 +118,14 @@ export interface PropostaDBType {
     enabled: boolean,
     created_at: string,
     updated_at: string
+}
+
+export interface PrestacaoServicoDetalhada {
+  id_prestacao: string;
+  cliente_nome: string;
+  cliente_email: string;
+  servico_nome: string;
+  descricao: string;
+  data_pedido: string;
+  urgente: boolean;
 }

@@ -6,7 +6,8 @@ const OrcamentoRoute = {
     getAll: "/",
     getById: "/get-by-id/:id",
     update: "/update/:id",
-    delete: "/delete/:id"
+    delete: "/delete/:id",
+    calcular: "/calcular/:id"
 }
 
 const OrcamentoRouter = Router()
@@ -16,5 +17,6 @@ OrcamentoRouter.get(OrcamentoRoute.getAll, OrcamentoController.getAll)
 OrcamentoRouter.get(OrcamentoRoute.getById, OrcamentoController.get)
 OrcamentoRouter.put(OrcamentoRoute.update, OrcamentoController.update)
 OrcamentoRouter.delete(OrcamentoRoute.delete, OrcamentoController.delete)
+OrcamentoRouter.put(OrcamentoRoute.calcular, OrcamentoController.calcular)
 
 export { OrcamentoRouter }

@@ -52,9 +52,10 @@ export const FreelancerModel = {
 
             const value = [id]
 
-            const rows = await db.execute(query, value)
+            const [rows] = await db.execute(query, value)
 
-            return Array.isArray(rows) && rows.length > 0 ? rows[0] : []
+            if (Array.isArray(rows) && rows.length === 0) return null
+            return Array.isArray(rows) ? (rows as any[])[0] : null
         } catch (error) {
             console.log(error)
             return null

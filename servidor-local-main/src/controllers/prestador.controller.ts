@@ -56,8 +56,6 @@ export const FreelancerController = {
     async get(req: Request, res: Response) {
         const { id } = req.params
 
-        const getUser: PrestadorTypeDB = req.body
-
         if (!id) {
             return res.status(400).json({
                 status: "error",
@@ -66,26 +64,18 @@ export const FreelancerController = {
             })
         }
 
-        if (!getUser) {
-            return res.status(400).json({
-                status: "error",
-                message: "Dados de Freelancer invalidos",
-                data: null
-            })
-        }
-
         const getUserResponse = await FreelancerModel.get(id as string)
 
         if (!getUserResponse) {
-            return res.status(400).json({
+            return res.status(404).json({
                 status: "error",
-                message: "Erro ao atualizar Freelancer",
+                message: "Freelancer nao encontrado",
                 data: null
             })
         }
         return res.status(200).json({
             status: "success",
-            message: "Freelancer atualizado com sucesso",
+            message: "Freelancer encontrado com sucesso",
             data: getUserResponse
         })
 

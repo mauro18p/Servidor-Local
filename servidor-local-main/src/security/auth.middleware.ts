@@ -9,7 +9,7 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
         return res.status(401).json({ message: "Utilizador nao authenticado"})
     }
 
-    const token = authHeader.split("") [1]
+    const token = authHeader.split(" ")[1]
     // ["Bearer", "nslkfnlkasjojwenfnknlanfnifowesdnlsndfndngiwoe"]
 
     try {

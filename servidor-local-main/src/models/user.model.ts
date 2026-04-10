@@ -7,33 +7,33 @@ import { hashPassword } from "../utils/password.js";
 export const UserModel = {
     async create(newUser: userTypeDB) {
         try {
-        const query = `INSERT INTO tbl_utilizadores (
+            const query = `INSERT INTO tbl_utilizadores (
             id, nome, numero_identificacao, data_nascimento, 
             email, password, telefone, pais, localidade, 
             enabled, created_at, updated_at
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-        const values = [
-            generateUUID(),
-            newUser.nome,
-            newUser.numero_identificacao,
-            formatDateDDMMYYY(newUser.data_nascimento),
-            newUser.email,
-            await hashPassword(newUser.password),
-            newUser.telefone,
-            newUser.pais,
-            newUser.localidade,
-            newUser.enabled,
-            new Date(),
-            new Date()
-        ];
+            const values = [
+                generateUUID(),
+                newUser.nome,
+                newUser.numero_identificacao,
+                formatDateDDMMYYY(newUser.data_nascimento),
+                newUser.email,
+                await hashPassword(newUser.password),
+                newUser.telefone,
+                newUser.pais,
+                newUser.localidade,
+                newUser.enabled,
+                new Date(),
+                new Date()
+            ];
 
-        const [rows] = await db.execute(query, values)
+            const [rows] = await db.execute(query, values)
 
-        return rows
-    } catch (error) {
-        console.log(error)
-}
-},
+            return rows
+        } catch (error) {
+            console.log(error)
+        }
+    },
 
     async getAll() {
         try {
@@ -52,17 +52,18 @@ export const UserModel = {
         try {
             const query = 'SELECT * FROM tbl_utilizadores WHERE id = ?'
 
-            const rows = await db.execute(query)
+            const [rows] = await db.execute(query, [id])
 
-            return Array.isArray(rows) && rows.length > 0 ? rows[0] : []
+            if (Array.isArray(rows) && rows.length === 0) return null
+            return Array.isArray(rows) ? (rows as any[])[0] : null
         } catch (error) {
             console.log(error)
             return null
         }
     },
 
-        async getByEmail(email: string): Promise<userTypeDB | null> {
-         try {
+    async getByEmail(email: string): Promise<userTypeDB | null> {
+        try {
             const [rows] = await db.execute(
                 `SELECT * FROM tbl_utilizadores
                 WHERE tbl_utilizadores.email = ?`,
@@ -78,8 +79,8 @@ export const UserModel = {
     },
 
     async update(id: string, updateUser: userTypeDB) {
-            try {
-        const query = `UPDATE tbl_utilizadores
+        try {
+            const query = `UPDATE tbl_utilizadores
                     SET
                         nome=?,
                         numero_identificacao=?,
@@ -95,28 +96,28 @@ export const UserModel = {
                         id=?
                     ;`
 
-        const values = [
-            updateUser.nome,
-            updateUser.numero_identificacao,
-            formatDateDDMMYYY(updateUser.data_nascimento),
-            updateUser.email,
-            await hashPassword(updateUser.password),
-            updateUser.telefone,
-            updateUser.pais,
-            updateUser.localidade,
-            updateUser.enabled,
-            new Date(),
-            id
-        ]
+            const values = [
+                updateUser.nome,
+                updateUser.numero_identificacao,
+                formatDateDDMMYYY(updateUser.data_nascimento),
+                updateUser.email,
+                await hashPassword(updateUser.password),
+                updateUser.telefone,
+                updateUser.pais,
+                updateUser.localidade,
+                updateUser.enabled,
+                new Date(),
+                id
+            ]
 
-        const rows = await db.execute(query, values)
+            const rows = await db.execute(query, values)
 
-        return rows
-    } catch (error) {
-        console.log(error)
-        return null
-    }
-},
+            return rows
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    },
 
 
     async delete(id: string) {

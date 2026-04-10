@@ -5,7 +5,7 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "dev": "tsx watch src/index.ts",
-    "docs": "swagger-jsdoc -o./scr/docs/swagger.json ./scr/docs/swagger.ts",
+    "docs": "swagger-jsdoc -o./src/docs/swagger.json ./src/docs/swagger.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

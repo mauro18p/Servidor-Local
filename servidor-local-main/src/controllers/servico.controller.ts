@@ -57,8 +57,6 @@ export const serviceController = {
     async get(req: Request, res: Response) {
         const { id } = req.params
 
-        const getUser: ServicoTypeDB = req.body
-
         if (!id) {
             return res.status(400).json({
                 status: "error",
@@ -67,26 +65,18 @@ export const serviceController = {
             })
         }
 
-        if (!getUser) {
-            return res.status(400).json({
-                status: "error",
-                message: "Dados de servico invalidos",
-                data: null
-            })
-        }
-
         const getUserResponse = await ServiceModel.get(id as string)
 
         if (!getUserResponse) {
-            return res.status(400).json({
+            return res.status(404).json({
                 status: "error",
-                message: "Erro ao atualizar servico",
+                message: "Servico nao encontrado",
                 data: null
             })
         }
         return res.status(200).json({
             status: "success",
-            message: "Servico atualizado com sucesso",
+            message: "Servico encontrado com sucesso",
             data: getUserResponse
         })
 

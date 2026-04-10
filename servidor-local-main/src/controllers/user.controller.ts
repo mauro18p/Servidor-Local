@@ -58,8 +58,6 @@ export const UserController = {
     async get(req: Request, res: Response) {
         const { id } = req.params
 
-        const getUser: userTypeDB = req.body
-
         if (!id) {
             return res.status(400).json({
                 status: "error",
@@ -68,26 +66,18 @@ export const UserController = {
             })
         }
 
-        if (!getUser) {
-            return res.status(400).json({
-                status: "error",
-                message: "Dados de utilizador invalidos",
-                data: null
-            })
-        }
-
-        const getUserResponse = await UserModel.update(id as string, getUser)
+        const getUserResponse = await UserModel.get(id as string)
 
         if (!getUserResponse) {
-            return res.status(400).json({
+            return res.status(404).json({
                 status: "error",
-                message: "Erro ao atualizar utilizador",
+                message: "Utilizador não encontrado",
                 data: null
             })
         }
         return res.status(200).json({
             status: "success",
-            message: "utilizador atualizado com sucesso",
+            message: "Utilizador encontrado com sucesso",
             data: getUserResponse
         })
 
