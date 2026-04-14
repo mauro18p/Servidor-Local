@@ -158,7 +158,8 @@ export const UserController = {
         const payload = {
             id: userData.id,
             email: userData.email,
-            nome: userData.nome
+            nome: userData.nome,
+            role: userData.role
         }
 
         const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: "1h"})

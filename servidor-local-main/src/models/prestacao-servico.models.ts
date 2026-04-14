@@ -1,6 +1,6 @@
 import type { RowDataPacket } from "mysql2"
 import db from "../lib/db.js"
-import type { PrestacaoServicoDBType, PrestacaoServicoDetalhada } from "../utils/types.js"
+import type { PrestacaoServicoDBType, PrestacaoServicoDetalhadaType } from "../utils/types.js"
 import { generateUUID } from "../utils/uuid.js"
 
 
@@ -139,7 +139,7 @@ export const PrestacaoServicoModel = {
                 ps.urgencia as urgencia
                 FROM tbl_prestacao_servico ps
                 INNER JOIN tbl_servicos s ON ps.id_servico = s.id
-                INNER JOIN tbl_utilizadores s ON ps.id_utilizador = u.id
+                INNER JOIN tbl_utilizadores u ON ps.id_utilizador = u.id
                 ORDER BY ps.created_at DESC;
                 LIMIT ? OFFSET ?`
 

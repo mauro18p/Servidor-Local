@@ -1,17 +1,19 @@
+import type { RowDataPacket } from "mysql2";
 import db from "../lib/db.js";
 import type { PrestadorTypeDB } from "../utils/types.js";
 import { generateUUID } from "../utils/uuid.js";
 
 
 export const FreelancerModel = {
-    async create(newFreelancer: PrestadorTypeDB) {
+    async create(newFreelancer: PrestadorTypeDB): Promise<PrestadorTypeDB | null> {
         try {
-        const query = `INSERT INTO tbl_prestadores (
+        const [rows] = await db.execute<PrestadorTypeDB & RowDataPacket[]> (
+        `INSERT INTO tbl_prestadores (
             id, id_utilizadores, nif, profissao, 
             taxa_urgencia, minimo_desconto, percentagem_desconto, disponivel, 
             enabled, created_at, updated_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-        const values = [
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
             generateUUID(),
             newFreelancer.id_utilizadores,
             newFreelancer.nif,
@@ -23,39 +25,39 @@ export const FreelancerModel = {
             newFreelancer.enabled,
             new Date(),
             new Date()
-        ];
+        ]
+    )
 
-        const [rows] = await db.execute(query, values)
-
-        return rows
+        return rows as PrestadorTypeDB
     } catch (error) {
         console.log(error)
+        return null
 }
 },
 
-    async getAll() {
+    async getAll(): Promise<PrestadorTypeDB[] | null>  {
         try {
             const query = "SELECT * FROM tbl_prestadores";
 
-            const rows = await db.execute(query);
+            const [rows] = await db.execute<PrestadorTypeDB[] & RowDataPacket[]>(query);
 
-            return Array.isArray(rows) && rows.length > 0 ? rows[0] : [];
+            return rows as PrestadorTypeDB[];
         } catch (error) {
             console.log(error);
             return null;
         }
     },
 
-    async get(id: string) {
+    async get(id: string): Promise<PrestadorTypeDB | null>  {
         try {
             const query = 'SELECT * FROM tbl_prestadores WHERE id = ?'
 
             const value = [id]
 
-            const [rows] = await db.execute(query, value)
+            const [rows] = await db.execute<PrestadorTypeDB & RowDataPacket[]>(query, value)
 
             if (Array.isArray(rows) && rows.length === 0) return null
-            return Array.isArray(rows) ? (rows as any[])[0] : null
+            return Array.isArray(rows) ? rows[0] as PrestadorTypeDB : null
         } catch (error) {
             console.log(error)
             return null
@@ -101,13 +103,13 @@ export const FreelancerModel = {
     }
 },
 
-    async delete(id: string) {
+    async delete(id: string): Promise<PrestadorTypeDB | null>  {
         try {
             const query = 'DELETE FROM tbl_prestadores WHERE id = ?'
 
             const value = [id]
 
-            const [rows]: any = await db.execute(query, value)
+            const [rows]: any = await db.execute<PrestadorTypeDB & RowDataPacket[]>(query, value)
 
             return rows[0]?.affectedRows === 0 ? null : rows
         } catch (error) {

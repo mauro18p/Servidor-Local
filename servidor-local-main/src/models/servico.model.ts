@@ -99,8 +99,34 @@ export const ServiceModel = {
             console.log(error)
             return null
         }
-    }
+    },
 
+    async getAllServicoDetalhado(limit: number, offset: number): Promise<ServicoTypeDB[] | null> {
+        try {
+            const query = 
+            `SELECT DISTINCT
+                s.id as id_servico
+                s.nome as servico_nome
+                s.descricao as servico_descricao
+                c.designacao as designacao_categoria
+                c.icone as icone_categoria
+                e.id as id_empresa
+                e.designacao as designacao_empresa
+                e.icone as icone_empresa
+                s.enabled
+            FROM tbl_servicos s
+            INNER JOIN tbl_categoria c ON c.id = s.id_categoria
+            INNER JOIN tbl_prestacao_servico ps ON s.id = ps.id_servico
+            INNER JOIN tbl_empresa e ON e.id = ps.id_empresa
+            LIMIT ? OFFSET ?
+            `
+
+
+            return null
+        } catch (error) {
+            return null
+        }
+    }
 
 
 

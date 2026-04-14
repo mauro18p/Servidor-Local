@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UserController } from "../controllers/user.controller.js"
-import authMiddleware from "../security/auth.middleware.js";
+import authMiddleware, { authorize } from "../security/auth.middleware.js";
+import { Role } from "../utils/types.js";
 
 
 const userRoute = {
@@ -14,11 +15,14 @@ const userRoute = {
 
 const UserRouter = Router()
 
-UserRouter.get(userRoute.getAll, authMiddleware, UserController.getAll)
-UserRouter.get(userRoute.getById, UserController.get)
-UserRouter.post(userRoute.create, UserController.create)
-UserRouter.put(userRoute.update, UserController.update)
-UserRouter.delete(userRoute.delete, UserController.delete)
 UserRouter.post(userRoute.login, UserController.login)
+UserRouter.post(userRoute.create, UserController.create)
 
+UserRouter.use(authMiddleware)
+
+UserRouter.get(userRoute.getAll, authorize([Role.ADMIN]), UserController.getAll)
+UserRouter.get(userRoute.getById, authorize([Role.ADMIN]), UserController.get)
+UserRouter.put(userRoute.update, authorize([Role.ADMIN]), UserController.update)
+UserRouter.delete(userRoute.delete, authorize([Role.ADMIN]), UserController.delete)
+// criar rota reset password
 export {UserRouter}

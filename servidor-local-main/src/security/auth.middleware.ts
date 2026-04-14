@@ -1,6 +1,18 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
+declare global {
+    namespace Express {
+        interface Request {
+            user?: {
+                id: string,
+                email: string,
+                role: string
+            }
+        }
+    }
+}
+
 export default function authMiddleware(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers.authorization
     // Bearer nslkfnlkasjojwenfnknlanfnifowesdnlsndfndngiwoe
@@ -13,7 +25,13 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
     // ["Bearer", "nslkfnlkasjojwenfnknlanfnifowesdnlsndfndngiwoe"]
 
     try {
-        const decodedToken = jwt.verify(token as string, process.env.JWT_SECRET as string)
+        const decodedToken = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: string, email: string, role: string}
+
+        req.user = {
+            id: decodedToken.id,
+            email: decodedToken.email,
+            role: decodedToken.role,
+        }
 
         next()
 
@@ -22,6 +40,18 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
     }
 }
 
+// RBAC - Role Based Access Control
+export function authorize(roles: string[]) {
+    return (req: Request, res: Response, next: NextFunction) => {
+        if (!req.user) {
+            return res.status(401).json({message: "Utilizador nao authenticado"})
+        }
+
+        if (!roles.includes(req.user.role)){
+            return res.status(403).json({message: "Permissao insuficiente"})
+        }
+    }
+}
 
 
 
