@@ -1,5 +1,7 @@
 import { Router } from "express"
 import { PrestacaoServicoController } from "../controllers/prestacao-servico.controller.js"
+import authMiddleware, { authorize } from "../security/auth.middleware.js"
+import { Role } from "../utils/types.js"
 
 const PrestacaoServicoRoute = {
     create: "/create",
@@ -12,11 +14,14 @@ const PrestacaoServicoRoute = {
 
 const PrestacaoServicoRouter = Router()
 
-PrestacaoServicoRouter.post(PrestacaoServicoRoute.create, PrestacaoServicoController.create)
-PrestacaoServicoRouter.get(PrestacaoServicoRoute.getAll, PrestacaoServicoController.getAll)
-PrestacaoServicoRouter.get(PrestacaoServicoRoute.getById, PrestacaoServicoController.get)
-PrestacaoServicoRouter.put(PrestacaoServicoRoute.update, PrestacaoServicoController.update)
-PrestacaoServicoRouter.delete(PrestacaoServicoRoute.delete, PrestacaoServicoController.delete)
-PrestacaoServicoRouter.get(PrestacaoServicoRoute.getAllPrestacaoServicoDetalhada,PrestacaoServicoController.getAllPrestacaoServicoDetalhado )
+PrestacaoServicoRouter.get(PrestacaoServicoRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), PrestacaoServicoController.get)
+PrestacaoServicoRouter.get(PrestacaoServicoRoute.getAll, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), PrestacaoServicoController.getAll)
+PrestacaoServicoRouter.get(PrestacaoServicoRoute.getAllPrestacaoServicoDetalhada, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), PrestacaoServicoController.getAllPrestacaoServicoDetalhado )
+
+PrestacaoServicoRouter.use(authMiddleware)
+
+PrestacaoServicoRouter.post(PrestacaoServicoRoute.create, authorize([Role.ADMIN]), PrestacaoServicoController.create)
+PrestacaoServicoRouter.put(PrestacaoServicoRoute.update, authorize([Role.ADMIN]), PrestacaoServicoController.update)
+PrestacaoServicoRouter.delete(PrestacaoServicoRoute.delete, authorize([Role.ADMIN]), PrestacaoServicoController.delete)
 
 export { PrestacaoServicoRouter }

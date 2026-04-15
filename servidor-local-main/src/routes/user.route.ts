@@ -15,14 +15,14 @@ const userRoute = {
 
 const UserRouter = Router()
 
-UserRouter.post(userRoute.login, UserController.login)
-UserRouter.post(userRoute.create, UserController.create)
+UserRouter.post(userRoute.login, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), UserController.login)
+UserRouter.post(userRoute.create, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), UserController.create)
 
 UserRouter.use(authMiddleware)
 
 UserRouter.get(userRoute.getAll, authorize([Role.ADMIN]), UserController.getAll)
-UserRouter.get(userRoute.getById, authorize([Role.ADMIN]), UserController.get)
-UserRouter.put(userRoute.update, authorize([Role.ADMIN]), UserController.update)
+UserRouter.get(userRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), UserController.get)
+UserRouter.put(userRoute.update, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), UserController.update)
 UserRouter.delete(userRoute.delete, authorize([Role.ADMIN]), UserController.delete)
 // criar rota reset password
 export {UserRouter}

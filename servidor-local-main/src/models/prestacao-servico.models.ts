@@ -1,6 +1,6 @@
 import type { RowDataPacket } from "mysql2"
 import db from "../lib/db.js"
-import type { PrestacaoServicoDBType, PrestacaoServicoDetalhadaType } from "../utils/types.js"
+import type { CategoriaDBType, PrestacaoServicoDBType, PrestacaoServicoDetalhadaType } from "../utils/types.js"
 import { generateUUID } from "../utils/uuid.js"
 
 
@@ -153,4 +153,30 @@ export const PrestacaoServicoModel = {
       return null;
     }
   },
+    async PrestacaoServicoPorCategoria(categoria: CategoriaDBType, limit: number, offset: number): Promise<PrestacaoServicoDBType[] | null> {
+        try{
+            const query = 
+                `SELECT DISTINT
+                ps.id as id_prestacao_servico,
+                ps.designacao as designacao,
+                u.nome as nome_utilizador,
+                u.email as email_utilizador,
+                s.nome as nome_servico,
+                ps.created_at as data_pedido,
+                ps.urgencia as urgencia
+                FROM tbl_prestacao_servico ps
+                INNER JOIN tbl_servicos s ON ps.id_servico = s.id
+                INNER JOIN tbl_categoria c ON c.id = s.id_categoria
+                ORDER BY ps.created_at DESC;
+                LIMIT ? OFFSET ?`
+
+            const values = [categoria.id ,limit, offset]
+
+            const [rows] = await db.execute<PrestacaoServicoDBType[] & RowDataPacket[]>(query, values);
+      return rows as PrestacaoServicoDBType[];
+    } catch (error) {
+      console.error("Erro SQL em getPedidosPaginados:", error);
+      return null;
+    }
+  }
 }

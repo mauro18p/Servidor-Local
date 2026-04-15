@@ -1,5 +1,7 @@
 import { Router } from "express"
 import { FreelancerController } from "../controllers/prestador.controller.js"
+import authMiddleware, { authorize } from "../security/auth.middleware.js"
+import { Role } from "../utils/types.js"
 
 const FreelancerRoute = {
     create:"/create",
@@ -11,10 +13,12 @@ const FreelancerRoute = {
 
 const FreelancerRouter = Router()
 
-FreelancerRouter.get(FreelancerRoute.getAll, FreelancerController.getAll)
-FreelancerRouter.get(FreelancerRoute.getById, FreelancerController.get)
-FreelancerRouter.post(FreelancerRoute.create, FreelancerController.create)
-FreelancerRouter.put(FreelancerRoute.update, FreelancerController.update)
-FreelancerRouter.delete(FreelancerRoute.delete, FreelancerController.delete)
+FreelancerRouter.use(authMiddleware)
+
+FreelancerRouter.get(FreelancerRoute.getAll, authorize([Role.ADMIN,]), FreelancerController.getAll)
+FreelancerRouter.get(FreelancerRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), FreelancerController.get)
+FreelancerRouter.post(FreelancerRoute.create, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA]), FreelancerController.create)
+FreelancerRouter.put(FreelancerRoute.update, authorize([Role.ADMIN, Role.EMPRESA, Role.PRESTADOR]), FreelancerController.update)
+FreelancerRouter.delete(FreelancerRoute.delete, authorize([Role.ADMIN, Role.EMPRESA, Role.PRESTADOR]), FreelancerController.delete)
 
 export {FreelancerRouter}
