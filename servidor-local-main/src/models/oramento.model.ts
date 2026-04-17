@@ -12,7 +12,7 @@ export const OrcamentoModel = {
                 VALUES (?, ?, ?, ?, ?, ?)`,
 
                 [
-                    generateUUID(),
+                    null,
                     orcamento.total,
                     orcamento.id_utilizadores,
                     orcamento.enabled,

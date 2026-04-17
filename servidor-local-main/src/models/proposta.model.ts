@@ -12,7 +12,7 @@ export const PropostaModel = {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
 
                 [
-                    generateUUID(),
+                    null,
                     proposta.id_prestacao_servico,
                     proposta.preco_hora,
                     proposta.horas_estimadas,

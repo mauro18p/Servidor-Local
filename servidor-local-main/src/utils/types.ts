@@ -174,7 +174,7 @@ export interface CategoriaDBType {
     updated_at: string
 }
 
-export interface empresaDBType {
+export interface EmpresaDBType {
     id: string,
     designacao: string,
     descricao: string,
