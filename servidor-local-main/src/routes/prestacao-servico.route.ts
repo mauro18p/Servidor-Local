@@ -9,14 +9,17 @@ const PrestacaoServicoRoute = {
     getById: "/get-by-id/:id",
     update: "/update/:id",
     delete: "/delete/:id",
-    getAllPrestacaoServicoDetalhada: "/get-all-detalhado"
+    getAllPrestacaoServicoDetalhada: "/get-all-detalhado",
+    getByCategoria: "/get-by-categoria"
 }
 
 const PrestacaoServicoRouter = Router()
 
 PrestacaoServicoRouter.get(PrestacaoServicoRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), PrestacaoServicoController.get)
 PrestacaoServicoRouter.get(PrestacaoServicoRoute.getAll, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), PrestacaoServicoController.getAll)
-PrestacaoServicoRouter.get(PrestacaoServicoRoute.getAllPrestacaoServicoDetalhada, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), PrestacaoServicoController.getAllPrestacaoServicoDetalhado )
+PrestacaoServicoRouter.get(PrestacaoServicoRoute.getAllPrestacaoServicoDetalhada, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), PrestacaoServicoController.getAllPrestacaoServicoDetalhado)
+PrestacaoServicoRouter.get(PrestacaoServicoRoute.getByCategoria, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), PrestacaoServicoController.PrestacaoServicoPorCategoria)
+
 
 PrestacaoServicoRouter.use(authMiddleware)
 

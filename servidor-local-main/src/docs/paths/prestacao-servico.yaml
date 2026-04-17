@@ -183,3 +183,43 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
+  /prestacao_servico/get-by-categoria:
+    get:
+      summary: Buscar todas as prestacoes de servico por categoria
+      tags:
+       - Prestacao de Servico
+      description: Retorna uma lista de prestacao de servicos por categorias
+      parameters:
+       - name: idCategoria
+         in: params
+         required: false
+         schema:
+          type: string
+          example: "7"
+       - name: limit
+         in: query
+         required: false
+         schema:
+          type: string
+          example: "10"
+       - name: offset
+         in: query
+         required: false
+         schema:
+          type: string
+          example: "0"
+      response:
+        "200":
+          description: Prestador apagado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSucess"
+        "404":
+          description: Prestador nao encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseError"

@@ -1,6 +1,6 @@
 import type { RowDataPacket } from "mysql2"
 import db from "../lib/db.js"
-import type { CategoriaDBType, PrestacaoServicoDBType, PrestacaoServicoDetalhadaType } from "../utils/types.js"
+import type { CategoriaDBType, PrestacaoServicoDBType, PrestacaoServicoDetalhadaType, PrestacaoServicoPorCategoriaType } from "../utils/types.js"
 import { generateUUID } from "../utils/uuid.js"
 
 
@@ -42,7 +42,10 @@ export const PrestacaoServicoModel = {
     async get(id: string): Promise<PrestacaoServicoDBType | null> {
         try {
             const [rows] = await db.execute<PrestacaoServicoDBType & RowDataPacket[]>(
-                `SELECT * FROM tbl_prestacao_servico 
+                `SELECT DISTINCT
+                    ps.* 
+                    pr
+                    FROM tbl_prestacao_servico 
                 WHERE tbl_prestacao_servico.id = ?`,
 
                 [id]
@@ -127,8 +130,8 @@ export const PrestacaoServicoModel = {
     },
 
     async getAllPrestacaoServicoDetalhado(limit: number, offset: number): Promise<PrestacaoServicoDBType[] | null> {
-        try{
-            const query = 
+        try {
+            const query =
                 `SELECT
                 ps.id as id_prestacao_servico,
                 ps.designacao as designacao,
@@ -144,39 +147,42 @@ export const PrestacaoServicoModel = {
                 LIMIT ? OFFSET ?`
 
             const [rows] = await db.execute<PrestacaoServicoDBType[] & RowDataPacket[]>(query, [
-        limit.toString(),
-        offset.toString(),
-      ]);
-      return rows as PrestacaoServicoDBType[];
-    } catch (error) {
-      console.error("Erro SQL em getPedidosPaginados:", error);
-      return null;
-    }
-  },
-    async PrestacaoServicoPorCategoria(categoria: CategoriaDBType, limit: number, offset: number): Promise<PrestacaoServicoDBType[] | null> {
-        try{
-            const query = 
-                `SELECT DISTINT
+                limit.toString(),
+                offset.toString(),
+            ]);
+            return rows as PrestacaoServicoDBType[];
+        } catch (error) {
+            console.error("Erro SQL em getPedidosPaginados:", error);
+            return null;
+        }
+    },
+    async PrestacaoServicoPorCategoria(idCategoria: string, limit: number, offset: number): Promise<PrestacaoServicoPorCategoriaType[] | null> {
+        try {
+            const query = `
+            SELECT DISTINCT
                 ps.id as id_prestacao_servico,
-                ps.designacao as designacao,
-                u.nome as nome_utilizador,
-                u.email as email_utilizador,
+                ps.designacao as descricao,
                 s.nome as nome_servico,
+                c.designacao as c_nome,
+                c.icone, as icone_categria
                 ps.created_at as data_pedido,
-                ps.urgencia as urgencia
-                FROM tbl_prestacao_servico ps
-                INNER JOIN tbl_servicos s ON ps.id_servico = s.id
-                INNER JOIN tbl_categoria c ON c.id = s.id_categoria
-                ORDER BY ps.created_at DESC;
-                LIMIT ? OFFSET ?`
+            FROM tbl_prestacao_servico ps
+            INNER JOIN tbl_servicos s ON ps.id_servico = s.id
+            INNER JOIN tbl_categoria c ON c.id = s.id_categoria
+            WHERE c.id = ?
+            ORDER BY ps.created_at DESC
+            LIMIT ? OFFSET ?`;
 
-            const values = [categoria.id ,limit, offset]
+            const values = [idCategoria, limit, offset]
 
-            const [rows] = await db.execute<PrestacaoServicoDBType[] & RowDataPacket[]>(query, values);
-      return rows as PrestacaoServicoDBType[];
-    } catch (error) {
-      console.error("Erro SQL em getPedidosPaginados:", error);
-      return null;
+            const [rows] = await db.execute<PrestacaoServicoPorCategoriaType[] & RowDataPacket[]>(query, values);
+
+            if (Array.isArray(rows) && rows.length === 0) return null
+
+            return rows as PrestacaoServicoPorCategoriaType[];
+        } catch (error) {
+            console.error("Erro SQL em getPedidosPaginados:", error);
+            return null;
+        }
     }
-  }
 }

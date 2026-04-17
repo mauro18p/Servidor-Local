@@ -18,14 +18,14 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
     // Bearer nslkfnlkasjojwenfnknlanfnifowesdnlsndfndngiwoe
 
     if (!authHeader) {
-        return res.status(401).json({ message: "Utilizador nao authenticado"})
+        return res.status(401).json({ message: "Utilizador nao authenticado" })
     }
 
     const token = authHeader.split(" ")[1]
     // ["Bearer", "nslkfnlkasjojwenfnknlanfnifowesdnlsndfndngiwoe"]
 
     try {
-        const decodedToken = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: string, email: string, role: string}
+        const decodedToken = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: string, email: string, role: string }
 
         req.user = {
             id: decodedToken.id,
@@ -36,7 +36,7 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
         next()
 
     } catch (error) {
-        return res.status(401).json({ message: "Token invalido"})
+        return res.status(401).json({ message: "Token invalido" })
     }
 }
 
@@ -44,12 +44,32 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
 export function authorize(roles: string[]) {
     return (req: Request, res: Response, next: NextFunction) => {
         if (!req.user) {
-            return res.status(401).json({message: "Utilizador nao authenticado"})
+            return res.status(401).json({ message: "Utilizador nao authenticado" })
         }
 
-        if (!roles.includes(req.user.role)){
-            return res.status(403).json({message: "Permissao insuficiente"})
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({ message: "Permissao insuficiente" })
         }
+
+        next()
+    }
+}
+
+export function isOwner(model: any, field: string) {
+    return async (req: Request, res: Response, next: NextFunction) => {
+        const userId = req.user?.id
+
+        const { id } = req.params
+
+        const entity = await model.get(id as string)
+
+        if (!entity) return res.status(404).json({ message: "Entidade nao encontrada" })
+
+        if (!userId) return res.status(404).json({ message: "Utilizador nao autenticado" })
+
+        if (entity[field] !== userId) return res.status(403).json({ message: "Permisaao insuficiente" })
+
+        next()
     }
 }
 

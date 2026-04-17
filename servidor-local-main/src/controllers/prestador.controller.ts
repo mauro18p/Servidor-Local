@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
-import type { PrestadorTypeDB } from "../utils/types.js";
+import type { PrestacaoServicoPorCategoriaType, PrestadorTypeDB, ResponseType } from "../utils/types.js";
 import { FreelancerModel } from "../models/prestador.model.js";
+import { PrestacaoServicoModel } from "../models/prestacao-servico.models.js";
 
 export const FreelancerController = {
 

@@ -1,5 +1,5 @@
 import type { Request, Response } from "express"
-import type { PrestacaoServicoDBType, ResponseType } from "../utils/types.js"
+import type { PrestacaoServicoDBType, PrestacaoServicoPorCategoriaType, ResponseType } from "../utils/types.js"
 import { PrestacaoServicoModel } from "../models/prestacao-servico.models.js"
 
 
@@ -189,5 +189,44 @@ export const PrestacaoServicoController = {
                 return res.status(201).json(response)
 
 
+    },
+
+    async PrestacaoServicoPorCategoria (req: Request, res: Response) {
+        const { idCategoria } = req.params as { idCategoria: string }
+        const { limit, offset } = req.query as { limit: string, offset: string }
+
+        let LIMIT = 10
+        let OFFSET = 0
+
+        if (limit && parseInt(limit as string) > 0) LIMIT = parseInt(limit as string)
+        if (offset && parseInt(offset as string) >= 0) OFFSET = parseInt(offset as string)
+
+        if (!idCategoria) {
+            const response: ResponseType<PrestacaoServicoPorCategoriaType> = {
+                status: "error",
+                message: "Categoria obrigatorio",
+                data: null
+            }
+            return res.status(400).json(response)
+        }
+
+        const PrestacaoServicoPorCategoriaResponse = await PrestacaoServicoModel.PrestacaoServicoPorCategoria( idCategoria as string, LIMIT, OFFSET)
+
+        if (!PrestacaoServicoPorCategoriaResponse) {
+             const response: ResponseType<PrestacaoServicoPorCategoriaType> = {
+                status: "error",
+                message: "Prestacao de servico nao encontrado",
+                data: null
+            }
+            return res.status(404).json(response)
+        }
+
+        const response: ResponseType<PrestacaoServicoPorCategoriaType[]> = {
+            status: "success",
+            message: "Prestacao de servico encontrada com sucesso",
+            data: PrestacaoServicoPorCategoriaResponse
+        }
+
+        return res.status(200).json(response)
     }
 }

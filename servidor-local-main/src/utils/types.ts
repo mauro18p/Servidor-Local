@@ -186,3 +186,12 @@ export interface empresaDBType {
     created_at: string,
     updated_at: string
 }
+
+export interface PrestacaoServicoPorCategoriaType{
+    id_prestacao_servico: string,
+    descricao: string,
+    nome_servico: string,
+    nome_categoria: string,
+    icone_categria: string,
+    data_pedido: string,
+}
