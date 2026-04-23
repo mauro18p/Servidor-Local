@@ -1,4 +1,5 @@
 import { EmpresaModel } from "../../models/empresa.model.js";
+import { PrestacaoServicoModel } from "../../models/prestacao-servico.models.js";
 import { UserModel } from "../../models/user.model.js";
 import type { EmpresaDBType } from "../../utils/types.js";
 
@@ -29,6 +30,9 @@ export const empresaResolver = {
     Empresa: {
             utilizadores: async (parent: { id: string }) => {
                 return await UserModel.get(parent.id)
+            },
+            prestacao: async (parent: { id: string }) => {
+                return await PrestacaoServicoModel.get(parent.id)
             }
         }
 }

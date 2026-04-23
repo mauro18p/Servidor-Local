@@ -1,4 +1,6 @@
+import { PrestacaoServicoModel } from "../../models/prestacao-servico.models.js";
 import { FreelancerModel } from "../../models/prestador.model.js"; 
+import { PropostaModel } from "../../models/proposta.model.js";
 import type { PrestadorTypeDB } from "../../utils/types.js";
 
 
@@ -23,5 +25,14 @@ export const prestadorResolver = {
             return await FreelancerModel.delete(args.id,);
         }
 
-    }
+    },
+
+    Prestador: {
+                proposta: async (parent: { id: string }) => {
+                    return await PropostaModel.get(parent.id)
+                },
+                prestacao: async (parent: { id: string }) => {
+                    return await PrestacaoServicoModel.get(parent.id)
+                }
+            }
 }

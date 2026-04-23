@@ -29,7 +29,7 @@ export const serviceController = {
         }
 
         return res.status(200).json({
-            status: "sucesso",
+            status: "success",
             message: "servico adicionado",
             data: createServiceResponse
         })
@@ -47,7 +47,7 @@ export const serviceController = {
             })
         }
         return res.status(200).json({
-            status: "sucesso",
+            status: "success",
             mensagem: "servicos encontrado",
             data: getAllServicesResponse
         })
@@ -76,7 +76,7 @@ export const serviceController = {
         }
         return res.status(200).json({
             status: "success",
-            message: "Servico encontrado com sucesso",
+            message: "Servico encontrado com success",
             data: getUserResponse
         })
 
@@ -115,7 +115,7 @@ export const serviceController = {
         }
         return res.status(200).json({
             status: "success",
-            message: "Servico atualizado com sucesso",
+            message: "Servico atualizado com success",
             data: UpdateUserResponse
         })
     },
@@ -144,7 +144,7 @@ export const serviceController = {
         }
         return res.status(200).json({
             status: "success",
-            message: "Servico apagado com sucesso",
+            message: "Servico apagado com success",
             data: deleteServiceResponse
         })
     },

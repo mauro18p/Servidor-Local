@@ -48,8 +48,8 @@ export const UserController = {
             })
         }
         return res.status(200).json({
-            status: "sucesso",
-            mensagem: "utilizadores encontrado",
+            status: "success",
+            message: "utilizadores encontrado",
             data: getAllUsersResponse
         })
     },
@@ -151,7 +151,7 @@ export const UserController = {
             
             return res.status(401).json({
                 status: "error",
-                mensagem: "Credenciais invalidos"
+                message: "Credenciais invalidos"
             })
         }
 
@@ -165,7 +165,7 @@ export const UserController = {
         const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: "1h"})
 
         return res.status(200).json({
-            status: "sucesso",
+            status: "success",
             message: "Login realizado com sucesso",
             data: {
                 token,

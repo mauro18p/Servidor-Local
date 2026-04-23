@@ -26,14 +26,14 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
 
     try {
         const decodedToken = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: string, email: string, role: string }
-
+        
+        next()
+        
         req.user = {
             id: decodedToken.id,
             email: decodedToken.email,
             role: decodedToken.role,
         }
-
-        next()
 
     } catch (error) {
         return res.status(401).json({ message: "Token invalido" })

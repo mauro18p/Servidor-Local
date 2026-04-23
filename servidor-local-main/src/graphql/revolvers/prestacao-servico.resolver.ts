@@ -2,6 +2,7 @@ import { EmpresaModel } from "../../models/empresa.model.js";
 import { OrcamentoModel } from "../../models/oramento.model.js";
 import { PrestacaoServicoModel } from "../../models/prestacao-servico.models.js"; 
 import { FreelancerModel } from "../../models/prestador.model.js";
+import { PropostaModel } from "../../models/proposta.model.js";
 import { ServiceModel } from "../../models/servico.model.js";
 import { UserModel } from "../../models/user.model.js";
 import type { PrestacaoServicoDBType } from "../../utils/types.js";
@@ -18,7 +19,7 @@ export const prestacaoServicoResolver = {
     },
 
     Mutation: {
-        createPrestacaoPrestacao: async (_: any, args: { prestacaoServico: PrestacaoServicoDBType }) => {
+        createPrestacaoServico: async (_: any, args: { prestacaoServico: PrestacaoServicoDBType }) => {
             return await PrestacaoServicoModel.create(args.prestacaoServico);
         },
         updatePrestacaoServico: async (_: any, args: { id: string, prestacaoServico: PrestacaoServicoDBType }) => {
@@ -46,5 +47,8 @@ export const prestacaoServicoResolver = {
             utilizadores: async (parent: { id: string }) => {
                 return await UserModel.get(parent.id)
             },
+            proposta: async (parent: { id : string }) => {
+                return await PropostaModel.get(parent.id)
+            }
         }
 }

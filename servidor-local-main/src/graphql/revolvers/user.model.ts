@@ -1,3 +1,4 @@
+import { OrcamentoModel } from "../../models/oramento.model.js";
 import { UserModel } from "../../models/user.model.js"; 
 import type { userTypeDB } from "../../utils/types.js";
 
@@ -23,5 +24,11 @@ export const userResolver = {
             return await UserModel.delete(args.id,);
         }
 
-    }
+    },
+
+    User: {Orcamento
+            : async (parent: { id: string }) => {
+                return await OrcamentoModel.get(parent.id)
+            }
+        }
 }

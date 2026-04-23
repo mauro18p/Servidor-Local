@@ -1,4 +1,5 @@
 import { OrcamentoModel } from "../../models/oramento.model.js"; 
+import type { PrestacaoServicoModel } from "../../models/prestacao-servico.models.js";
 import { UserModel } from "../../models/user.model.js";
 import type { OrcamentoDBType } from "../../utils/types.js";
 
@@ -28,6 +29,9 @@ export const orcamentoResolver = {
 
     Orcamento: {
             utilizadores: async (parent: { id: string }) => {
+                return await UserModel.get(parent.id)
+            },
+            PrestacaoServicoModel: async (parent: { id: string }) => {
                 return await UserModel.get(parent.id)
             }
         }
