@@ -85,7 +85,7 @@ export interface ServicoTypeDB {
     id: string,
     nome: string,
     descricao: string,
-    id_categoria: string,
+    categoria: string,
     enabled: boolean,
     created_at: string,
     updated_at: string

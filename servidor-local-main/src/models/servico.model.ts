@@ -1,5 +1,6 @@
 import type { ServicoTypeDB } from "../utils/types.js";
 import db from "../lib/db.js";
+import type { RowDataPacket } from "mysql2";
 
 export const ServiceModel = {
     async create(newService: ServicoTypeDB) {
@@ -11,7 +12,7 @@ export const ServiceModel = {
                 null,
                 newService.nome,
                 newService.descricao,
-                newService.id_categoria,
+                newService.categoria,
                 newService.enabled,
                 new Date(),
                 new Date(),
@@ -19,7 +20,10 @@ export const ServiceModel = {
 
             const [rows] = await db.execute(query, values);
 
-            return rows;
+            const queryLastId = `SELECT * FROM tbl_servicos ORDER BY id DESC LIMIT 1`
+            const [lastService] = await db.execute<ServicoTypeDB[] & RowDataPacket[]>(queryLastId)
+
+            return lastService[0] as ServicoTypeDB;
         } catch (error) {
             console.log(error);
             return null;
@@ -71,7 +75,7 @@ export const ServiceModel = {
             const values = [
                 updatedService.nome,
                 updatedService.descricao,
-                updatedService.id_categoria,
+                updatedService.categoria,
                 updatedService.enabled,
                 new Date(),
                 id
