@@ -149,3 +149,32 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
+  /calcular/{id}:
+    put:
+      summary: Calcula o orcamento 
+      tags: 
+        - Orcamento
+      description: calcula um orcamento especifico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do orcamento
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: Orcamento apagado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSucess"
+        "404":
+          description: Orcamento nao encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseError"

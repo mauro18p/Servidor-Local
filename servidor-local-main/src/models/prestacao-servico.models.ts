@@ -1,18 +1,18 @@
 import type { RowDataPacket } from "mysql2"
 import db from "../lib/db.js"
-import type { PrestacaoServicoDBType } from "../utils/types.js"
+import type { CategoriaDBType, PrestacaoServicoDBType, PrestacaoServicoDetalhadaType, PrestacaoServicoPorCategoriaType } from "../utils/types.js"
 import { generateUUID } from "../utils/uuid.js"
 
 
 export const PrestacaoServicoModel = {
-    async create(prestacaoServico: PrestacaoServicoDBType) {
+    async create(prestacaoServico: PrestacaoServicoDBType): Promise<PrestacaoServicoDBType | null> {
         try {
-            const [rows] = await db.execute(
+            const [rows] = await db.execute<PrestacaoServicoDBType & RowDataPacket[]>(
                 `INSERT INTO tbl_prestacao_servico 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
 
                 [
-                    generateUUID(),
+                    null,
                     prestacaoServico.designacao,
                     prestacaoServico.subtotal,
                     prestacaoServico.horas_estimadas,
@@ -26,31 +26,33 @@ export const PrestacaoServicoModel = {
                     new Date()
                 ]
             )
-            console.log({ rows })
-            return rows
+            return rows as PrestacaoServicoDBType
         } catch (err) {
             console.log(err)
             return null
         }
     },
 
-    async getAll() {
-        const [rows] = await db.execute("SELECT * FROM tbl_prestacao_servico")
+    async getAll(): Promise<PrestacaoServicoDBType[] | null> {
+        const [rows] = await db.execute<PrestacaoServicoDBType[] & RowDataPacket[]>("SELECT * FROM tbl_prestacao_servico")
 
-        return rows
+        return rows as PrestacaoServicoDBType[]
     },
 
-    async get(id: string) {
+    async get(id: string): Promise<PrestacaoServicoDBType | null> {
         try {
-            const [rows] = await db.execute(
-                `SELECT * FROM tbl_prestacao_servico 
+            const [rows] = await db.execute<PrestacaoServicoDBType & RowDataPacket[]>(
+                `SELECT DISTINCT
+                    ps.* 
+                    pr
+                    FROM tbl_prestacao_servico 
                 WHERE tbl_prestacao_servico.id = ?`,
 
                 [id]
             )
 
             if (Array.isArray(rows) && rows.length === 0) return null
-            return Array.isArray(rows) ? rows[0] : null
+            return Array.isArray(rows) ? rows[0] as PrestacaoServicoDBType : null
         } catch (err) {
             console.log(err)
             return null
@@ -87,7 +89,7 @@ export const PrestacaoServicoModel = {
                     id
                 ]
             )
-            console.log({ rows })
+
             return rows
         } catch (err) {
             console.log(err)
@@ -95,35 +97,92 @@ export const PrestacaoServicoModel = {
         }
     },
 
-    async delete(id: string) {
+    async delete(id: string): Promise<PrestacaoServicoDBType | null> {
         try {
-            const rows: any = await db.execute(
+            const rows: any = await db.execute<PrestacaoServicoDBType & RowDataPacket[]>(
                 `DELETE FROM tbl_prestacao_servico 
                 WHERE id = ?`,
 
                 [id]
             )
 
-            return rows[0].affectedRows === 0 ? null : rows[0]
+            return rows[0].affectedRows === 0 ? null : rows[0] as PrestacaoServicoDBType
         } catch (err) {
             console.log(err)
             return null
         }
     },
 
-    async getByIdOrcamento(id_orcamento: string): Promise<PrestacaoServicoDBType | null> {
+    async getByOrcamentoId(id_orcamento: string): Promise<PrestacaoServicoDBType[] | null> {
         try {
             const [rows] = await db.execute<PrestacaoServicoDBType[] & RowDataPacket[]>(
                 `SELECT * FROM tbl_prestacao_servico 
-                WHERE tbl_prestacao_servico.id_orcamento = ?`,
-                [id_orcamento]
-            )
+                 WHERE id_orcamento = ? AND enabled = true`,
+                [
+                    id_orcamento
+                ]
+            );
+            return Array.isArray(rows) ? rows as PrestacaoServicoDBType[] : [];
+        } catch (err) {
+            console.log(err);
+            return null;
+        }
+    },
+
+    async getAllPrestacaoServicoDetalhado(limit: number, offset: number): Promise<PrestacaoServicoDBType[] | null> {
+        try {
+            const query =
+                `SELECT
+                ps.id as id_prestacao_servico,
+                ps.designacao as designacao,
+                u.nome as nome_utilizador,
+                u.email as email_utilizador,
+                s.nome as nome_servico,
+                ps.created_at as data_pedido,
+                ps.urgencia as urgencia
+                FROM tbl_prestacao_servico ps
+                INNER JOIN tbl_servicos s ON ps.id_servico = s.id
+                INNER JOIN tbl_utilizadores u ON ps.id_utilizador = u.id
+                ORDER BY ps.created_at DESC;
+                LIMIT ? OFFSET ?`
+
+            const [rows] = await db.execute<PrestacaoServicoDBType[] & RowDataPacket[]>(query, [
+                limit.toString(),
+                offset.toString(),
+            ]);
+            return rows as PrestacaoServicoDBType[];
+        } catch (error) {
+            console.error("Erro SQL em getPedidosPaginados:", error);
+            return null;
+        }
+    },
+    async PrestacaoServicoPorCategoria(idCategoria: string, limit: number, offset: number): Promise<PrestacaoServicoPorCategoriaType[] | null> {
+        try {
+            const query = `
+            SELECT DISTINCT
+                ps.id as id_prestacao_servico,
+                ps.designacao as descricao,
+                s.nome as nome_servico,
+                c.designacao as c_nome,
+                c.icone, as icone_categria
+                ps.created_at as data_pedido,
+            FROM tbl_prestacao_servico ps
+            INNER JOIN tbl_servicos s ON ps.id_servico = s.id
+            INNER JOIN tbl_categoria c ON c.id = s.id_categoria
+            WHERE c.id = ?
+            ORDER BY ps.created_at DESC
+            LIMIT ? OFFSET ?`;
+
+            const values = [idCategoria, limit, offset]
+
+            const [rows] = await db.execute<PrestacaoServicoPorCategoriaType[] & RowDataPacket[]>(query, values);
 
             if (Array.isArray(rows) && rows.length === 0) return null
-            return Array.isArray(rows) ? rows[0] as PrestacaoServicoDBType : null
-        } catch (err) {
-            console.log(err)
-            return null
+
+            return rows as PrestacaoServicoPorCategoriaType[];
+        } catch (error) {
+            console.error("Erro SQL em getPedidosPaginados:", error);
+            return null;
         }
     }
 

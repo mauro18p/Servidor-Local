@@ -48,6 +48,37 @@ components:
         - categoria
         - enabled
 
+    ServicoDetalhado:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nome:
+          type: string
+          example: "Serviço de Limpeza"
+        descricao:
+          type: string
+          example: "Serviço de limpeza profissional para residências e "
+        designacao_categoria:
+          type: string
+          example: "Limpeza"
+        icone_categoria:
+          type: string
+          example: ""
+        id_cempresa:
+          type: string
+          example: 1
+        designacao_empresa:
+          type: string
+          example: "empresa de limpeza"
+        icone_empresa:
+          type: string
+          example: ""
+        enabled:
+          type: string
+          example: true
+        
     #Schema generico para sucesso
     ResponseSucess:
       ttpe: object
@@ -71,3 +102,4 @@ components:
           example: false
         data:
           type: object
+

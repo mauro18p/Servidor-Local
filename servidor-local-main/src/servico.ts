@@ -1,4 +1,4 @@
-
+/*
 import db from "./lib/db.js";
 import { type ResponseType, type ServicoType, type ServicoTypeDB } from "./utils/types.js"
 
@@ -185,3 +185,4 @@ export async function deleteService(id: string) {
         return null
     }
 }
+*/

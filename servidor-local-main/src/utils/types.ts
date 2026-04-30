@@ -1,3 +1,22 @@
+// ENUM
+// ENUM
+// ENUM
+// ENUM
+export enum Role {
+    CLIENTE = "cliente",
+    ADMIN = "admin",
+    PRESTADOR = "prestador",
+    EMPRESA = "empresa"
+}
+
+export enum TipoPrestador {
+    PARTICULAR = "particular",
+    EMPRESA = "empresa"
+}
+
+
+
+
 
 export interface PedidoServicoType {
     cliente: string;
@@ -6,10 +25,10 @@ export interface PedidoServicoType {
     urgente: boolean;
 }
 
-export interface ResponseType {
-    status: boolean,
+export interface ResponseType<T> {
+    status: "success" | "error",
     message: string,
-    data: ServicoType | null,
+    data: T | null,
 }
 
 export interface ServicoType {
@@ -44,6 +63,7 @@ export interface PrestNome {
 
 
 
+
 export interface userTypeDB {
     id: string
     nome: string
@@ -54,6 +74,7 @@ export interface userTypeDB {
     telefone: string
     pais: string
     localidade: string
+    role: Role
     enabled: boolean
     created_at: string
     update_at: string
@@ -117,6 +138,10 @@ export interface PrestacaoServicoDBType {
     preco_hora: number,
     estado: EstadoPrestacaoServico,
     id_orcamento: string,
+    id_utilizador: string,
+    id_empresa: string,
+    tipo_prestador: TipoPrestador,
+    urgente: boolean,
     enabled: boolean,
     created_at: string,
     updated_at: string
@@ -131,4 +156,56 @@ export interface PropostaDBType {
     enabled: boolean,
     created_at: string,
     updated_at: string
+}
+
+export interface PrestacaoServicoDetalhadaType {
+    id_prestacao: string;
+    cliente_nome: string;
+    cliente_email: string;
+    servico_nome: string;
+    descricao: string;
+    data_pedido: string;
+    urgente: boolean;
+}
+
+export interface ServicoDetalhadoType {
+    id: string,
+    nome: string,
+    descricao: string,
+    designacao_categoria: string,
+    icone_categoria: string,
+    id_empresa: string,
+    designacao_empresa: string,
+    icone_empresa: string,
+    enabled: boolean
+}
+
+export interface CategoriaDBType {
+    id: string,
+    designacao: string,
+    icone: string,
+    created_at: string,
+    updated_at: string
+}
+
+export interface EmpresaDBType {
+    id: string,
+    designacao: string,
+    descricao: string,
+    localizacao: string,
+    nif: string,
+    icone: string,
+    id_utilizador: string
+    enabled: boolean,
+    created_at: string,
+    updated_at: string
+}
+
+export interface PrestacaoServicoPorCategoriaType{
+    id_prestacao_servico: string,
+    descricao: string,
+    nome_servico: string,
+    nome_categoria: string,
+    icone_categria: string,
+    data_pedido: string,
 }

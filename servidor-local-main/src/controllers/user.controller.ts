@@ -48,8 +48,8 @@ export const UserController = {
             })
         }
         return res.status(200).json({
-            status: "sucesso",
-            mensagem: "utilizadores encontrado",
+            status: "success",
+            message: "utilizadores encontrado",
             data: getAllUsersResponse
         })
     },
@@ -57,8 +57,6 @@ export const UserController = {
     // selecionar utilizador por id
     async get(req: Request, res: Response) {
         const { id } = req.params
-
-        const getUser: userTypeDB = req.body
 
         if (!id) {
             return res.status(400).json({
@@ -68,26 +66,18 @@ export const UserController = {
             })
         }
 
-        if (!getUser) {
-            return res.status(400).json({
-                status: "error",
-                message: "Dados de utilizador invalidos",
-                data: null
-            })
-        }
-
-        const getUserResponse = await UserModel.update(id as string, getUser)
+        const getUserResponse = await UserModel.get(id as string)
 
         if (!getUserResponse) {
-            return res.status(400).json({
+            return res.status(404).json({
                 status: "error",
-                message: "Erro ao atualizar utilizador",
+                message: "Utilizador não encontrado",
                 data: null
             })
         }
         return res.status(200).json({
             status: "success",
-            message: "utilizador atualizado com sucesso",
+            message: "Utilizador encontrado com sucesso",
             data: getUserResponse
         })
 
@@ -161,20 +151,21 @@ export const UserController = {
             
             return res.status(401).json({
                 status: "error",
-                mensagem: "Credenciais invalidos"
+                message: "Credenciais invalidos"
             })
         }
 
         const payload = {
             id: userData.id,
             email: userData.email,
-            nome: userData.nome
+            nome: userData.nome,
+            role: userData.role
         }
 
         const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: "1h"})
 
         return res.status(200).json({
-            status: "sucesso",
+            status: "success",
             message: "Login realizado com sucesso",
             data: {
                 token,

@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import type { ServicoTypeDB } from "../utils/types.js";
+import type { ResponseType, ServicoTypeDB } from "../utils/types.js";
 import { ServiceModel } from "../models/servico.model.js";
 
 
@@ -29,7 +29,7 @@ export const serviceController = {
         }
 
         return res.status(200).json({
-            status: "sucesso",
+            status: "success",
             message: "servico adicionado",
             data: createServiceResponse
         })
@@ -47,7 +47,7 @@ export const serviceController = {
             })
         }
         return res.status(200).json({
-            status: "sucesso",
+            status: "success",
             mensagem: "servicos encontrado",
             data: getAllServicesResponse
         })
@@ -57,8 +57,6 @@ export const serviceController = {
     async get(req: Request, res: Response) {
         const { id } = req.params
 
-        const getUser: ServicoTypeDB = req.body
-
         if (!id) {
             return res.status(400).json({
                 status: "error",
@@ -67,26 +65,18 @@ export const serviceController = {
             })
         }
 
-        if (!getUser) {
-            return res.status(400).json({
-                status: "error",
-                message: "Dados de servico invalidos",
-                data: null
-            })
-        }
-
         const getUserResponse = await ServiceModel.get(id as string)
 
         if (!getUserResponse) {
-            return res.status(400).json({
+            return res.status(404).json({
                 status: "error",
-                message: "Erro ao atualizar servico",
+                message: "Servico nao encontrado",
                 data: null
             })
         }
         return res.status(200).json({
             status: "success",
-            message: "Servico atualizado com sucesso",
+            message: "Servico encontrado com success",
             data: getUserResponse
         })
 
@@ -125,7 +115,7 @@ export const serviceController = {
         }
         return res.status(200).json({
             status: "success",
-            message: "Servico atualizado com sucesso",
+            message: "Servico atualizado com success",
             data: UpdateUserResponse
         })
     },
@@ -154,9 +144,35 @@ export const serviceController = {
         }
         return res.status(200).json({
             status: "success",
-            message: "Servico apagado com sucesso",
+            message: "Servico apagado com success",
             data: deleteServiceResponse
         })
+    },
+
+    async getAllServicoDetalhado(req: Request, res: Response){
+        const {limit, offset} = req.query
+
+        let LIMIT = 10
+        let OFFSET = 0
+
+        if (limit) {
+            LIMIT = parseInt(limit as string)
+        }
+
+        if (offset) {
+            OFFSET = parseInt(offset as string)
+        }
+
+        const getAllServicoDetalhadoResponse = await ServiceModel.getAllServicoDetalhado(LIMIT , OFFSET)
+
+        if (!getAllServicoDetalhadoResponse) {
+            const response: ResponseType<null> = {
+                status: "error",
+                message: "Erro ao buscar servicos",
+                data: null
+            }
+            return res.status(404).json(response)
+        }
     }
 }
 

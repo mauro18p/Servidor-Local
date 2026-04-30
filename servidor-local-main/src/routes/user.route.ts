@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { UserController } from "../controllers/user.controller.js"
-import authMiddleware from "../security/auth.middleware.js";
+import authMiddleware, { authorize, isOwner } from "../security/auth.middleware.js";
+import { Role } from "../utils/types.js";
+import { UserModel } from "../models/user.model.js";
 
 
 const userRoute = {
@@ -14,11 +16,14 @@ const userRoute = {
 
 const UserRouter = Router()
 
-UserRouter.get(userRoute.getAll, authMiddleware, UserController.getAll)
-UserRouter.get(userRoute.getById, UserController.get)
-UserRouter.post(userRoute.create, UserController.create)
-UserRouter.put(userRoute.update, UserController.update)
-UserRouter.delete(userRoute.delete, UserController.delete)
-UserRouter.post(userRoute.login, UserController.login)
+UserRouter.post(userRoute.login, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), UserController.login)
+UserRouter.post(userRoute.create, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), UserController.create)
 
+UserRouter.use(authMiddleware)
+
+UserRouter.get(userRoute.getAll, authorize([Role.ADMIN]), UserController.getAll)
+UserRouter.get(userRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), UserController.get)
+UserRouter.put(userRoute.update, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), isOwner(UserModel, "isOwner"), UserController.update)
+UserRouter.delete(userRoute.delete, authorize([Role.ADMIN]), isOwner(UserModel, "isOwner"), UserController.delete)
+// criar rota reset password
 export {UserRouter}

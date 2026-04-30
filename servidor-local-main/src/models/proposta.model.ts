@@ -9,11 +9,11 @@ export const PropostaModel = {
     async create(proposta: PropostaDBType) {
         try {
             const [rows] = await db.execute(
-                `INSERT INTO tbl_propostas 
+                `INSERT INTO tbl_proposta
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
 
                 [
-                    generateUUID(),
+                    null,
                     proposta.id_prestacao_servico,
                     proposta.preco_hora,
                     proposta.horas_estimadas,
@@ -40,8 +40,13 @@ export const PropostaModel = {
     async get(id: string) {
         try {
             const [rows] = await db.execute(
-                `SELECT * FROM tbl_propostas 
-                WHERE tbl_propostas.id = ?`,
+                `SELECT DISTINCT
+                    pt.* ,
+                    pr.id as owner
+                FROM tbl_propostas pt
+                INNER JOIN tbl_prestadores pr ON pt.id_prestador = pr.id
+                INNER JOIN tbl_utilizadores u ON pr.id_utilizador = u.id
+                WHERE pt.id = ?`,
 
                 [id]
             )
