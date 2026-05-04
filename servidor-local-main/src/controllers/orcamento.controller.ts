@@ -234,8 +234,9 @@ export const OrcamentoController = {
 
 
 }
+/*
 
-const prestacaoServico = await PrestacaoServicoModel.getByIdOrcamento(
+const prestacaoServico = await PrestacaoServicoModel.get(
     id as string,
 );
 
@@ -315,3 +316,4 @@ return res.status(200).json({
 
     }
 };
+*/
