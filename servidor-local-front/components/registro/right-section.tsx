@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader } from "../ui/card";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const RightSection = () => {
 
@@ -83,10 +84,10 @@ export const RightSection = () => {
         }
     };
 
-    const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleRegistro = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        await fetch("http://localhost:8080/user/create", {
+        const response = await fetch("http://localhost:8080/user/create", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -100,16 +101,17 @@ export const RightSection = () => {
                 telefone: telefone,
                 pais: pais,
                 localidade: localidade,
-                role: role,
+                role: "cliente",
             }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Login successful:", data);
-            })
-            .catch((error) => {
-                console.error("Error during login:", error);
-            });
+        });
+        if (response.status === 200) {
+            toast.success("Utilizador criado com sucesso!");
+            if (typeof window !== "undefined") {
+                window.location.href = "/login";
+            }
+        } else {
+            toast.error("Erro ao criar utilizador!");
+        }
     };
 
     return (
@@ -146,7 +148,7 @@ export const RightSection = () => {
                         <div className="flex flex-col gap-2">
                             <Label className="" htmlFor="data">Data de Nascimento</Label>
                             <Input
-                                type="text"
+                                type="date"
                                 id="data"
                                 placeholder="Your Date of Birth ..."
                                 className="h-15 py-2 text-lg h-10"
@@ -220,7 +222,7 @@ export const RightSection = () => {
                                 onChange={ChangeRole}
                             />
                         </div>
-                        <Button className="h-15 bg-[#13A4EC] roundede-md text-white w-full py-3 drop-shadow-lg drop-shadow-gray-200">
+                        <Button className="h-15 bg-[#13A4EC] roundede-md text-white w-full py-3 drop-shadow-lg drop-shadow-gray-200" onClick={handleRegistro}>
                             Create Account
                         </Button>
                     </div>

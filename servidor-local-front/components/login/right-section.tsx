@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader } from "../ui/card";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const RightSection = () => {
 
@@ -13,7 +14,7 @@ export const RightSection = () => {
   const [password, setPassword] = useState("");
 
   const ChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(e.target.value) {
+    if (e.target.value) {
       setEmail(e.target.value);
     } else {
       setEmail("");
@@ -21,7 +22,7 @@ export const RightSection = () => {
   }
 
   const ChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(e.target.value) {
+    if (e.target.value) {
       setPassword(e.target.value);
     } else {
       setPassword("");
@@ -31,7 +32,7 @@ export const RightSection = () => {
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    await fetch("http://localhost:8080/user/login", {
+    const response = await fetch("http://localhost:8080/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -41,17 +42,21 @@ export const RightSection = () => {
         password: password
       })
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Login successful:", data);
-    })
-    .catch(error => {
-      console.error("Error during login:", error);
-    });
+    if (response.status === 200) {
+      toast.success("Login realizado com sucesso!");
 
-  }
-  
-  console.log("Email: ", email, "Password: ", password);
+      const responseData = await response.json();
+      console.log("Dados recebidos:", responseData);
+      localStorage.setItem("token", responseData.token);
+
+      if (typeof window !== "undefined") {
+       // window.location.href = "/home";
+      }
+    } else {
+      toast.error("Erro ao realizar login!");
+    }
+  };
+
 
   return (
     <div className="bg-blue-300 w-1/2 flex flex-col justify-center">
@@ -64,20 +69,20 @@ export const RightSection = () => {
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <Label className="">Email</Label>
-              <Input type="text" 
-              placeholder="example@email.com" 
-              className="py-2 text-lg h-10"
-              value={email}
-              onChange={ChangeEmail}
+              <Input type="text"
+                placeholder="example@email.com"
+                className="py-2 text-lg h-10"
+                value={email}
+                onChange={ChangeEmail}
               />
             </div>
             <div className="flex flex-col gap-2">
               <Label className="">Password</Label>
-              <Input type="password" 
-              placeholder="Your password ..." 
-              className="h-15 py-2 text-lg h-10" 
-              value={password}
-              onChange={ChangePassword}
+              <Input type="password"
+                placeholder="Your password ..."
+                className="h-15 py-2 text-lg h-10"
+                value={password}
+                onChange={ChangePassword}
               />
             </div>
             <Button className="h-15 bg-[#13A4EC] roundede-md text-white w-full py-3 drop-shadow-lg drop-shadow-gray-200" onClick={handleLogin}>
@@ -94,4 +99,5 @@ export const RightSection = () => {
       </Card>
     </div>
   );
+
 };

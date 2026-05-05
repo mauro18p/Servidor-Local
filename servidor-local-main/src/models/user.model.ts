@@ -22,7 +22,7 @@ export const UserModel = {
                 newUser.telefone,
                 newUser.pais,
                 newUser.localidade,
-                newUser.enabled,
+                newUser.enabled || null,
                 new Date(),
                 new Date()
             ];
