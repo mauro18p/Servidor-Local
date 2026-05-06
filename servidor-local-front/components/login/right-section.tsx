@@ -7,6 +7,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useState } from "react";
 import { toast } from "sonner";
+import { setCookie } from "nookies";
 
 export const RightSection = () => {
 
@@ -47,10 +48,20 @@ export const RightSection = () => {
 
       const responseData = await response.json();
       console.log("Dados recebidos:", responseData);
-      localStorage.setItem("token", responseData.token);
+      localStorage.setItem("token", responseData.data.token);
+
+      //salvar dados do utilizador no localStorage
+      setCookie(null, "token", responseData.data.token, {
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: "/"
+      });
+      setCookie(null, "user", JSON.stringify(responseData.data.user), {
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: "/"
+      });
 
       if (typeof window !== "undefined") {
-       // window.location.href = "/home";
+        window.location.href = "/home";
       }
     } else {
       toast.error("Erro ao realizar login!");

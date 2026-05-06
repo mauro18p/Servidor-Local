@@ -22,7 +22,7 @@ export const UserModel = {
                 newUser.telefone,
                 newUser.pais,
                 newUser.localidade,
-                newUser.enabled || null,
+                1,
                 new Date(),
                 new Date()
             ];
@@ -35,7 +35,7 @@ export const UserModel = {
         }
     },
 
-    async getAll() {
+    async getAll() {   
         try {
             const query = "SELECT * FROM tbl_utilizadores";
 

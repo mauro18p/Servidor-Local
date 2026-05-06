@@ -7,6 +7,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useState } from "react";
 import { toast } from "sonner";
+import { setCookie } from "nookies";
 
 export const RightSection = () => {
 
@@ -106,6 +107,8 @@ export const RightSection = () => {
         });
         if (response.status === 200) {
             toast.success("Utilizador criado com sucesso!");
+
+
             if (typeof window !== "undefined") {
                 window.location.href = "/login";
             }
@@ -148,7 +151,7 @@ export const RightSection = () => {
                         <div className="flex flex-col gap-2">
                             <Label className="" htmlFor="data">Data de Nascimento</Label>
                             <Input
-                                type="date"
+                                type="text"
                                 id="data"
                                 placeholder="Your Date of Birth ..."
                                 className="h-15 py-2 text-lg h-10"
@@ -158,7 +161,7 @@ export const RightSection = () => {
                         </div>
                         <div className="flex flex-col gap-2">
                             <Label className="" htmlFor="email">Email</Label>
-                            <Input 
+                            <Input
                                 type="text"
                                 id="email"
                                 placeholder="example@email.com"
@@ -169,7 +172,7 @@ export const RightSection = () => {
                         </div>
                         <div className="flex flex-col gap-2">
                             <Label className="" htmlFor="password">Password</Label>
-                            <Input 
+                            <Input
                                 type="password"
                                 id="password"
                                 placeholder="Your password ..."
