@@ -16,7 +16,13 @@ export const PedidoCard = (pedidoCardProps: PedidoCardProps) => {
     return (
         <Card>
             <CardContent>
+                <div className="relative">
+
                 <img src={pedidoCardProps.image} alt={pedidoCardProps.title} className="w-full h-48 object-cover rounded-md" />
+                <div className="absolute center text-white p-2">
+                    <img src={pedidoCardProps.category.icone} alt={pedidoCardProps.category.nome} />
+                </div>
+                </div>
                 <h2 className="text-xl font-semibold mt-4">{pedidoCardProps.title}</h2>
                 <p className="text-gray-600 mt-2">{pedidoCardProps.description}</p>
             </CardContent>

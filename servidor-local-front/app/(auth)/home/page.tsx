@@ -9,11 +9,11 @@ export default function HomePage() {
                     <PedidoCard
                         title="Emergency Plumbing"
                         description="24/7 emergency plumbing services available. Fast response and reliable solutions for all your plumbing needs."
-                        image="/images.jpg"
+                        image="https://content.nationalgeographic.pt/medio/2025/01/10/dromedarios_5464acc9_250110103422_1280x960.webp"
                         category={{
                             id: 1,
                             nome: "Categoria 1",
-                            icone: "/icone1.png"
+                            icone: "https://magtechnical.com/wp-content/uploads/2024/07/How-Your-Home-Plumbing-System-Works.jpg"
                         }} />
                 </div>
             </div>
