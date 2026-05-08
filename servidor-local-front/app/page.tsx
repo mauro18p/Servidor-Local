@@ -1,3 +1,10 @@
+import UpcomingSchedule from "@/components/dashboard/aside-calendar";
+
+
 export default function Home() {
-  return <div>Hello  World!</div>
+  return (
+    <div className="h-screen w-screen flex items-center justify-center">
+      <UpcomingSchedule/>
+    </div>
+  );
 }
