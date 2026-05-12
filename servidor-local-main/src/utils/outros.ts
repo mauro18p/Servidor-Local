@@ -5,8 +5,8 @@ import type { PropostaDBType } from "./types.js"
     async function get(id: string) {
         try {
             const [rows] = await db.execute(
-                `SELECT * FROM tbl_propostas 
-                WHERE tbl_propostas.id = ?`,
+                `SELECT * FROM tbl_proposta 
+                WHERE tbl_proposta.id = ?`,
 
                 [id]
             )

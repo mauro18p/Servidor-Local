@@ -9,9 +9,9 @@ import { useQuery } from "@apollo/client/react";
 interface PropostaRequest{
     id: string,
     owner: string,
-    estado: string,
+    estados: string,
     id_prestacao_servico:{
-        id_servico:{
+        id_servicos:{
             nome: string,
             categoria:{
                 id: string
@@ -21,8 +21,24 @@ interface PropostaRequest{
     }
 }
 
+    const fakeData: PropostaRequest = {
+        id: "123",
+        owner: "N/A",
+        estados: "Pending",
+        id_prestacao_servico:{
+            id_servicos:{
+                nome: "Fix Door",
+                categoria:{
+                    id: "123",
+                    icone: "I"
+                }
+            }
+        } 
+    }
+
 export const Proposal_Board = (propostaRequest: PropostaRequest) => {
     return(
+
         <Card>
             <CardHeader>
                 <div className="flex items-center justify-between border-b border-gray-200 px-6 py-6">
@@ -43,22 +59,22 @@ export const Proposal_Board = (propostaRequest: PropostaRequest) => {
                     <div className="flex gap-4 min-w-[250px]">
 
                     <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-sky-100">
-                        <span className="text-2xl">{propostaRequest.id_prestacao_servico.id_servico.categoria.icone}</span>
+                        <span className="text-2xl">{propostaRequest.id_prestacao_servico?.id_servicos?.categoria?.icone || fakeData.id_prestacao_servico.id_servicos.categoria.icone}</span>
                     </div>
 
                     <div className="flex items-center justify-between w-full">
                     
                         <div>
                             <h3 className="text-lg font-semibold text-gray-900 leading-none">
-                            {propostaRequest.id_prestacao_servico.id_servico.nome}
+                            {propostaRequest.id_prestacao_servico?.id_servicos?.nome || fakeData.id_prestacao_servico.id_servicos.nome}
                             </h3>
                             <p className="text-sm text-gray-500 mt-1">
-                            {propostaRequest.owner}
+                            {propostaRequest?.owner || fakeData.owner}
                             </p>
                         </div>
 
                         <span className="ml-4 rounded-md bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
-                            {propostaRequest.estado}
+                            {propostaRequest?.estados || fakeData.estados}
                         </span>
 
                     </div>
@@ -70,7 +86,7 @@ export const Proposal_Board = (propostaRequest: PropostaRequest) => {
                     <div className="rounded-xl border border-gray-200 bg-gray-50 p-5">
 
                         <div className="flex items-center gap-2 mb-4">
-                        <span className="text-sky-500">{propostaRequest.id_prestacao_servico.id_servico.categoria.icone}</span>
+                        <span className="text-sky-500">{propostaRequest.id_prestacao_servico?.id_servicos?.categoria?.icone || fakeData.id_prestacao_servico.id_servicos.categoria.icone}</span>
                         <h4 className="font-semibold text-gray-900">
                             Proposal Editor
                         </h4>
@@ -134,12 +150,12 @@ export const Proposal_Board = (propostaRequest: PropostaRequest) => {
             <CardFooter>
                     <div className="flex items-center justify-between w-full gap-6 border-b border-gray-200 px-6 py-6">
                         <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-sky-100"> 
-                            <span className="text-2xl">{propostaRequest.id_prestacao_servico.id_servico.categoria.icone}</span>
+                            <span className="text-2xl">{propostaRequest.id_prestacao_servico?.id_servicos?.categoria?.icone || fakeData.id_prestacao_servico.id_servicos.categoria.icone}</span>
                         </div>
                         
                         <div >
-                            <h3 className="text-xl font-semibold text-gray-900"> {propostaRequest.id_prestacao_servico.id_servico.nome}</h3>
-                            <p className="mt-1 text-sm text-gray-500">{propostaRequest.owner}</p>
+                            <h3 className="text-xl font-semibold text-gray-900"> {propostaRequest.id_prestacao_servico?.id_servicos?.nome || fakeData.id_prestacao_servico.id_servicos.nome}</h3>
+                            <p className="mt-1 text-sm text-gray-500">{propostaRequest?.owner || fakeData.owner}</p>
                         </div>
 
                         <div className="flex items-center justify-end gap-4">
