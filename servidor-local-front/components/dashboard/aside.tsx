@@ -36,6 +36,7 @@ export const Aside = () => {
                 </div>
 
                 <div className="flex flex-col justify-between">
+                    <div>
                     <nav className="my-6">
                         {navItems.map((item) => (
                             <button
@@ -61,7 +62,9 @@ export const Aside = () => {
                             </button>
                         ))}
                     </nav>
-
+                </div>
+                
+                <div className="fixed bottom-0 mb-5 left-0">
                     <button
                         type="button"
                         className="flex items-center gap-5 px-5 cursor-pointer rounded-[9px] px-5 text-[19px] font-semibold text-[#111c33]"
@@ -75,6 +78,7 @@ export const Aside = () => {
                     </button>
                 </div>
             </div>
+        </div >
         </>
     )
 }
