@@ -24,27 +24,26 @@ export const typeDefs = gql`
     }
     type Proposta {
         id: ID!,
-        id_prestacao_service: PrestacaoServico,
+        id_prestacao_servico: PrestacaoServico,
         preco_hora: Float!,
         horas_estimadas: Int,
         id_prestador: Prestador!,
-        estado: EstadoProposta,
+        estados: EstadoProposta,
         owner: String,
         enabled: Boolean,
         created_at: String,
         updated_at: String
     }
-    enum EstadoProposta {
-        PENDENTE,
-        ACEITE,
-        CANCELADO
+    enum EstadoProposta {,
+        aceito,
+        recusado
     }
 
     type Service {
         id: ID!,
         nome: String!,
         descricao: String!,
-        categoria: String!,
+        categoria: Categoria,
         enabled: Boolean,
         created_at: String,
         updated_at: String
@@ -68,7 +67,7 @@ export const typeDefs = gql`
         subtotal: Float!,
         horas_estimadas: Int!,
         id_prestador: Prestador!,
-        id_services: Service!,
+        id_servicos: Service!,
         id_empresa: Empresa!,
         tipo_prestador: TipoPrestador,
         preco_hora: Float!,
@@ -156,8 +155,8 @@ export const typeDefs = gql`
         updateService(id: ID!, nome: String, descricao: String, categoria: [ID], enabled: Boolean): Service,
         deleteService(id: ID!): Service,
 
-        createProposta(id_prestacao_service: ID!, id_prestador: ID!, preco_hora: Float!, horas_estimadas: Int!, estado: EstadoProposta, owner: String, enabled: Boolean): Proposta,
-        updateProposta(id: ID!, id_prestacao_service: ID, id_prestador: ID, preco_hora: Float, horas_estimadas: Int, estado: EstadoProposta, owner: String, enabled: Boolean): Proposta,
+        createProposta(id_prestacao_servico: ID!, id_prestador: ID!, preco_hora: Float!, horas_estimadas: Int!, estado: EstadoProposta, owner: String, enabled: Boolean): Proposta,
+        updateProposta(id: ID!, id_prestacao_servico: ID, id_prestador: ID, preco_hora: Float, horas_estimadas: Int, estado: EstadoProposta, owner: String, enabled: Boolean): Proposta,
         deleteProposta(id: ID!): Proposta,
 
         createPrestador(id: ID!, taxa_urgencia: Float!, percentagem_desconto: Float!, minimo_desconto: Float!, nif: String, profissao: String!, enable: Boolean): Prestador,

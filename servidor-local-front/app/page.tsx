@@ -1,6 +1,7 @@
 import { Aside } from "@/components/dashboard/aside";
 import UpcomingSchedule from "@/components/dashboard/aside-calendar";
-import { Proposal_Board } from "@/components/dashboard/proposal";
+import { Proposal_Board } from "@/components/dashboard/proposal2";
+import ProposalPage from "@/components/dashboard/proposal_page";
 import { RatesFees } from "@/components/dashboard/rate-fees";
 
 export default function Home() {
@@ -30,7 +31,7 @@ export default function Home() {
             </div>
 
             <div className="">
-              <Proposal_Board />
+              <ProposalPage />
             </div>
 
           </div>
