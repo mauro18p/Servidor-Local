@@ -1,8 +1,6 @@
-import { PrestacaoServicoModel } from "../../models/prestacao-servico.models.js";
-import { FreelancerModel } from "../../models/prestador.model.js"; 
-import { PropostaModel } from "../../models/proposta.model.js";
+import { FreelancerModel } from "../../models/prestador.model.js";
+import { UserModel } from "../../models/user.model.js";
 import type { PrestadorTypeDB } from "../../utils/types.js";
-
 
 export const prestadorResolver = {
     Query: {
@@ -10,7 +8,7 @@ export const prestadorResolver = {
             return await FreelancerModel.getAll();
         },
         getPrestadorById: async (_: any, args: { id: string }) => {
-            return await FreelancerModel.get(args.id)
+            return await FreelancerModel.get(args.id);
         }
     },
 
@@ -22,17 +20,13 @@ export const prestadorResolver = {
             return await FreelancerModel.update(args.id, args.prestador);
         },
         deletePrestador: async (_: any, args: { id: string }) => {
-            return await FreelancerModel.delete(args.id,);
+            return await FreelancerModel.delete(args.id);
         }
-
     },
 
     Prestador: {
-                proposta: async (parent: { id: string }) => {
-                    return await PropostaModel.get(parent.id)
-                },
-                prestacao: async (parent: { id: string }) => {
-                    return await PrestacaoServicoModel.get(parent.id)
-                }
-            }
-}
+        id_user: async (parent: { id: string }) => {
+            return await UserModel.get(parent.id);
+        }
+    }
+};

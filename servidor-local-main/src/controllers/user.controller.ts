@@ -2,18 +2,18 @@ import type { Request, Response } from "express";
 import { UserModel } from "../models/user.model.js"
 import type { userTypeDB } from "../utils/types.js"
 import { comparePassword } from "../utils/password.js";
-import  jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export const UserController = {
 
-    // criar um novo utilizador
+    // criar um novo User
     async create(req: Request, res: Response) {
         const newUser: userTypeDB = req.body
 
         if (!newUser) {
             return res.status(400).json({
                 status: "error",
-                message: "Dados de utilizador invalido",
+                message: "Dados de User invalido",
                 data: null
             })
         } else
@@ -24,37 +24,37 @@ export const UserController = {
         if (createNewService === null) {
             return res.status(400).json({
                 status: "error",
-                message: "Erro ao criar utilizador",
+                message: "Erro ao criar User",
                 data: null
             })
         }
 
         return res.status(200).json({
             status: "sucesso",
-            message: "utilizador adicionado",
+            message: "User adicionado",
             data: createNewService
         })
     },
 
-    // listar todos os utilizadors
+    // listar todos os Users
     async getAll(req: Request, res: Response) {
         const getAllUsersResponse = await UserModel.getAll()
 
         if (!getAllUsersResponse) {
             return res.status(400).json({
                 status: "error",
-                message: "Erro ao encontrar utilizadores",
+                message: "Erro ao encontrar Useres",
                 data: null
             })
         }
         return res.status(200).json({
             status: "success",
-            message: "utilizadores encontrado",
+            message: "Useres encontrado",
             data: getAllUsersResponse
         })
     },
 
-    // selecionar utilizador por id
+    // selecionar User por id
     async get(req: Request, res: Response) {
         const { id } = req.params
 
@@ -71,19 +71,19 @@ export const UserController = {
         if (!getUserResponse) {
             return res.status(404).json({
                 status: "error",
-                message: "Utilizador não encontrado",
+                message: "User não encontrado",
                 data: null
             })
         }
         return res.status(200).json({
             status: "success",
-            message: "Utilizador encontrado com sucesso",
+            message: "User encontrado com sucesso",
             data: getUserResponse
         })
 
     },
 
-    // atualizar dados de utilizadors
+    // atualizar dados de Users
     async update(req: Request, res: Response) {
         const { id } = req.params
 
@@ -100,7 +100,7 @@ export const UserController = {
         if (!UpdateUser) {
             return res.status(400).json({
                 status: "error",
-                message: "Dados de utilizador invalidos",
+                message: "Dados de User invalidos",
                 data: null
             })
         }
@@ -110,13 +110,13 @@ export const UserController = {
         if (!UpdateUserResponse) {
             return res.status(400).json({
                 status: "error",
-                message: "Erro ao atualizar utilizador",
+                message: "Erro ao atualizar User",
                 data: null
             })
         }
         return res.status(200).json({
             status: "success",
-            message: "utilizador atualizado com sucesso",
+            message: "User atualizado com sucesso",
             data: UpdateUserResponse
         })
     },
@@ -148,7 +148,7 @@ export const UserController = {
         const IsPasswordValid = await comparePassword(password, userData.password)
 
         if (!IsPasswordValid) {
-            
+
             return res.status(401).json({
                 status: "error",
                 message: "Credenciais invalidos"
@@ -162,7 +162,7 @@ export const UserController = {
             role: userData.role
         }
 
-        const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: "1h"})
+        const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: "1h" })
 
         return res.status(200).json({
             status: "success",
@@ -175,7 +175,7 @@ export const UserController = {
     },
 
 
-    // apagar utilizador de base de dados
+    // apagar User de base de dados
     async delete(req: Request, res: Response) {
         const { id } = req.params
 
@@ -193,13 +193,13 @@ export const UserController = {
         if (!deleteUserResponse) {
             return res.status(400).json({
                 status: "error",
-                message: "Erro ao apagar utilizador",
+                message: "Erro ao apagar User",
                 data: null
             })
         }
         return res.status(200).json({
             status: "success",
-            message: "utilizador apagado com sucesso",
+            message: "User apagado com sucesso",
             data: deleteUserResponse
         })
     }

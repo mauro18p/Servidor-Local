@@ -1,4 +1,4 @@
-INSERT INTO tbl_utilizadores (
+INSERT INTO tbl_Useres (
  id,
  nome,
  numero_identificacao,
@@ -76,7 +76,7 @@ VALUES (
     NOW()
 );
 
-INSERT INTO tbl_utilizadores 
+INSERT INTO tbl_Useres 
  VALUES (
 	"4f4662d3-27fc-4e29-ac53-1a9ecf73e69e",
 	"Lula Inacio",
@@ -92,7 +92,7 @@ INSERT INTO tbl_utilizadores
     NOW()
 );
 
-DELETE FROM tbl_utilizadores 
+DELETE FROM tbl_Useres 
 WHERE id = 'a4a11708-60d9-4ffa-a474-f4aa3af34bf3';
 
  

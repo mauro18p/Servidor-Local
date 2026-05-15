@@ -99,7 +99,7 @@ components:
       properties:
         message:
           type: string
-          example: "Utilizador criado com sucesso"
+          example: "User criado com sucesso"
         status:
           type: boolean
           example: true
@@ -110,7 +110,7 @@ components:
       properties:
         message:
           type: string
-          example: "Erro ao buscar utilizadores"
+          example: "Erro ao buscar Useres"
         status:
           type: boolean
           example: false

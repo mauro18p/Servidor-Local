@@ -20,7 +20,7 @@ components:
         nif:
           type: string
           example: 123456789
-        id_utilizador:
+        id_User:
           type: string
           example: 987654321
         icone:
@@ -39,7 +39,7 @@ components:
         total:
           type: number
           example: 1000
-        id_utilizadores:
+        id_user:
           type: string
           example: "M002b "
         enabled:
@@ -47,7 +47,7 @@ components:
           example: true
       required:
         - total  
-        - id_utilizadores  
+        - id_user  
         - enabled  
 
     #Schema generico para sucesso

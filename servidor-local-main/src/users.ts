@@ -13,12 +13,12 @@ import { formatDate, formatDateDDMMYYY } from "./utils/date.js"
 
 
 
-// adicionar utilizador a base de dados
+// adicionar User a base de dados
 export async function addUserToDB(newUser: userTypeDB) {
     console.log({ newUser })
 
     try {
-        const query = `INSERT INTO tbl_utilizadores (
+        const query = `INSERT INTO tbl_Useres (
             id, nome, numero_identificacao, data_nascimento, 
             email, password, telefone, pais, localidade, 
             enabled, created_at, updated_at
@@ -43,14 +43,14 @@ export async function addUserToDB(newUser: userTypeDB) {
         return rows
     } catch (error) {
         console.log(error)
-}
+    }
 }
 
 
-// selecionar utilizador por id
+// selecionar User por id
 export async function getUserById(id: string) {
     try {
-        const query = 'SELECT * FROM tbl_utilizadores WHERE id = ?'
+        const query = 'SELECT * FROM tbl_Useres WHERE id = ?'
 
         const value = [id]
 
@@ -63,10 +63,10 @@ export async function getUserById(id: string) {
 }
 
 
-// selicionar todos os utilizadores
+// selicionar todos os Useres
 export async function getAllUsers() {
     try {
-        const query = 'SELECT * FROM tbl_utilizadores'
+        const query = 'SELECT * FROM tbl_Useres'
 
         const rows = await db.execute(query)
 
@@ -78,10 +78,10 @@ export async function getAllUsers() {
 }
 
 
-// atualizar dados de utilizadores
+// atualizar dados de Useres
 export async function updateUser(id: string, updateUser: userTypeDB) {
     try {
-        const query = `UPDATE tbl_utilizadores
+        const query = `UPDATE tbl_Useres
                     SET
                         nome=?,
                         numero_identificacao=?,
@@ -121,10 +121,10 @@ export async function updateUser(id: string, updateUser: userTypeDB) {
 }
 
 
-// apagar utilizador por id
+// apagar User por id
 export async function deleteUserById(id: string) {
     const [rows] = await db.execute(
-        'DELETE FROM tbl_utilizadores WHERE id =?',
+        'DELETE FROM tbl_Useres WHERE id =?',
 
         [id]
     ) as [mysql.ResultSetHeader, mysql.FieldPacket[]]

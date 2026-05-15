@@ -50,7 +50,7 @@ export const RightSection = () => {
       console.log("Dados recebidos:", responseData);
       localStorage.setItem("token", responseData.data.token);
 
-      //salvar dados do utilizador no localStorage
+      //salvar dados do User no localStorage
       setCookie(null, "token", responseData.data.token, {
         maxAge: 60 * 60 * 24 * 7, // 7 days
         path: "/"

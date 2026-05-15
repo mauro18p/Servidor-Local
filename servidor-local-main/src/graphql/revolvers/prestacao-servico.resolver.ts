@@ -31,24 +31,24 @@ export const prestacaoServicoResolver = {
 
     },
 
-    Prestacao: {
-            prestador: async (parent: { id: string }) => {
-                return await FreelancerModel.get(parent.id)
+    PrestacaoServico: {
+            id_prestador: async (parent: { id_prestador: string }) => {
+                return await FreelancerModel.get(parent.id_prestador)
             },
-            servicos: async (parent: { id: string }) => {
-                return await ServiceModel.get(parent.id)
+            id_servicos: async (parent: { id_servico: string }) => {
+                return await ServiceModel.get(parent.id_servico)
             },
-            empresa: async (parent: { id: string }) => {
-                return await EmpresaModel.get(parent.id)
+            id_empresa: async (parent: { id_empresa: string }) => {
+                return await EmpresaModel.get(parent.id_empresa)
             },
-            orcamento: async (parent: { id: string }) => {
-                return await OrcamentoModel.get(parent.id)
+            id_orcamento: async (parent: { id_orcamento: string }) => {
+                return await OrcamentoModel.get(parent.id_orcamento)
             },
-            utilizadores: async (parent: { id: string }) => {
-                return await UserModel.get(parent.id)
+            id_utilizadores: async (parent: { id_utilizador: string }) => {
+                return await UserModel.get(parent.id_utilizador)
             },
-            proposta: async (parent: { id : string }) => {
-                return await PropostaModel.get(parent.id)
+            id_prestacao_servico: async (parent: { id : string }) => {
+                return await PropostaModel.getByIdPrestacaoServico(parent.id)
             }
         }
 }

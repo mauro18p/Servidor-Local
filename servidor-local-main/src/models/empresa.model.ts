@@ -18,7 +18,7 @@ export const EmpresaModel = {
                     empresa.localizacao,
                     empresa.nif,
                     empresa.icone,
-                    empresa.id_utilizador,
+                    empresa.id_User,
                     empresa.enabled,
                     new Date(),
                     new Date()
@@ -63,7 +63,7 @@ export const EmpresaModel = {
                 localizacao = ?,
                 nif = ?,
                 icone = ?,
-                id_utilizador = ?,
+                id_User = ?,
                 enabled = ?,
                 updated_at = ?
                 WHERE id = ?`,
@@ -74,7 +74,7 @@ export const EmpresaModel = {
                     empresa.localizacao,
                     empresa.nif,
                     empresa.icone,
-                    empresa.id_utilizador,
+                    empresa.id_User,
                     empresa.enabled,
                     new Date(),
                     id

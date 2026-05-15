@@ -10,7 +10,7 @@ Table table_prestadores [headercolor: #175e7a] {
 	updated_at datetime [ not null ]
 }
 
-Table table_utilizadores [headercolor: #175e7a] {
+Table table_Useres [headercolor: #175e7a] {
 	id integer [ pk, increment, not null, unique ]
 	nome varchar(50) [ not null ]
 	numero_identificacao varchar(100) [ not null ]

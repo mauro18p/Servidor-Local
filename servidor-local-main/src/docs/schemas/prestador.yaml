@@ -8,7 +8,7 @@ components:
         id:
           type: string
           example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
-        id_utilizadores:
+        id_user:
           type: string
           example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
         nif:
@@ -42,7 +42,7 @@ components:
     CreatePrestador:
       type: object
       properties:
-        id_utilizadores:
+        id_user:
           type: string
           example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
         nif:
@@ -67,7 +67,7 @@ components:
           type: boolean
           example: true
       required:
-        - id_utilizadores  
+        - id_user  
         - nif  
         - profissao  
         - taxa_urgencia  

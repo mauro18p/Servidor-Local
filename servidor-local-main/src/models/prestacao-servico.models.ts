@@ -135,14 +135,14 @@ export const PrestacaoServicoModel = {
                 `SELECT
                 ps.id as id_prestacao_servico,
                 ps.designacao as designacao,
-                u.nome as nome_utilizador,
-                u.email as email_utilizador,
+                u.nome as nome_User,
+                u.email as email_User,
                 s.nome as nome_servico,
                 ps.created_at as data_pedido,
                 ps.urgencia as urgencia
                 FROM tbl_prestacao_servico ps
                 INNER JOIN tbl_servicos s ON ps.id_servico = s.id
-                INNER JOIN tbl_utilizadores u ON ps.id_utilizador = u.id
+                INNER JOIN tbl_Useres u ON ps.id_User = u.id
                 ORDER BY ps.created_at DESC;
                 LIMIT ? OFFSET ?`
 

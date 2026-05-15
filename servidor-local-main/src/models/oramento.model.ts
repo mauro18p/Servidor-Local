@@ -14,7 +14,7 @@ export const OrcamentoModel = {
                 [
                     null,
                     orcamento.total,
-                    orcamento.id_utilizadores,
+                    orcamento.id_user,
                     orcamento.enabled,
                     new Date(),
                     new Date()
@@ -27,8 +27,8 @@ export const OrcamentoModel = {
         }
     },
 
-    async getAll(): Promise<OrcamentoDBType[] | null>  {
-        const [rows] = await db.execute<OrcamentoDBType[] & RowDataPacket[]> ("SELECT * FROM tbl_orcamento")
+    async getAll(): Promise<OrcamentoDBType[] | null> {
+        const [rows] = await db.execute<OrcamentoDBType[] & RowDataPacket[]>("SELECT * FROM tbl_orcamento")
 
         return rows as OrcamentoDBType[]
     },
@@ -55,14 +55,14 @@ export const OrcamentoModel = {
             const [rows] = await db.execute<OrcamentoDBType & RowDataPacket[]>(
                 `UPDATE tbl_orcamento 
                 SET total = ?, 
-                id_utilizadores = ?, 
+                id_user = ?, 
                 enabled = ?, 
                 updated_at = ?
                 WHERE id = ?`,
 
                 [
                     orcamento.total,
-                    orcamento.id_utilizadores,
+                    orcamento.id_user,
                     orcamento.enabled,
                     new Date(),
                     id
@@ -92,7 +92,7 @@ export const OrcamentoModel = {
     },
 
     async calcular(orcamento: OrcamentoDBType): Promise<OrcamentoDBType | null> {
-         try {
+        try {
             const [rows] = await db.execute<OrcamentoDBType & RowDataPacket[]>(
                 `INSERT INTO tbl_orcamento 
                 VALUES (?, ?, ?, ?, ?, ?)`,
@@ -100,7 +100,7 @@ export const OrcamentoModel = {
                 [
                     generateUUID(),
                     orcamento.total,
-                    orcamento.id_utilizadores,
+                    orcamento.id_user,
                     orcamento.enabled,
                     new Date(),
                     new Date()
@@ -114,7 +114,7 @@ export const OrcamentoModel = {
         }
     },
 
-        async atualizarTotal(id: string, total: number): Promise<OrcamentoDBType | null> {
+    async atualizarTotal(id: string, total: number): Promise<OrcamentoDBType | null> {
         try {
             const [rows] = await db.execute<OrcamentoDBType & RowDataPacket[]>(
                 `UPDATE tbl_orcamento 

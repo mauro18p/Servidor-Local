@@ -28,11 +28,11 @@ export const propostaResolver = {
     },
 
     Proposta: {
-            prestacao: async (parent: { id: string }) => {
-                return await PrestacaoServicoModel.get(parent.id)
+            id_prestacao_servico: async (parent: { id_prestacao_servico: string }) => {
+                return await PrestacaoServicoModel.get(parent.id_prestacao_servico)
             },
-            prestador: async (parent: { id: string }) => {
-                return await FreelancerModel.get(parent.id)
+            id_prestador: async (parent: { id_prestador: string }) => {
+                return await FreelancerModel.get(parent.id_prestador)
             }
         },
             

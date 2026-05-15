@@ -1,5 +1,4 @@
 import { CategoriaModel } from "../../models/categoria.model.js";
-import { PrestacaoServicoModel } from "../../models/prestacao-servico.models.js";
 import { ServiceModel } from "../../models/servico.model.js";
 import type { ServicoTypeDB } from "../../utils/types.js";
 
@@ -37,12 +36,9 @@ export const serviceResolver = {
 
     },
 
-    Servico: {
+    Service: {
         categoria: async (parent: { id: string }) => {
             return await CategoriaModel.get(parent.id)
-        },
-        prestacao: async (parent: { id: string }) => {
-            return await PrestacaoServicoModel.get(parent.id)
         }
     }
 }

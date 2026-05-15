@@ -2,7 +2,7 @@ import express, { type Request, type Response } from "express"
 import { addServicesToDB, adicionarServico, apagarServico, deleteService, getAllServices, getServiceById, listarServicos, obterServico, updateService } from "./servico.js"
 import { apagarNomeDoPrestador, calcularOrcamento, editarPrestadorDeServico, listarPrestadores, obterPrestador, selecionarServicos, } from "./orcamento.js"
 import { Prestador, } from "./prestador.js"
-import {  addUserToDB, deleteUserById, getAllUsers, getUserById, updateUser} from "./users.js"
+import { addUserToDB, deleteUserById, getAllUsers, getUserById, updateUser } from "./users.js"
 import type { ServicoTypeDB, userTypeDB } from "./utils/types.js"
 import { generateUUID } from "./utils/uuid.js"
 
@@ -147,14 +147,14 @@ app.delete("/apagar-prestador", (req: Request, res: Response) => {
 
 
 
-// rota para inserir utilizador
+// rota para inserir User
 app.post("/add-new-user", async (req: Request, res: Response) => {
   const newUser: userTypeDB = req.body
 
   if (!newUser) {
     return res.status(400).json({
       status: "error",
-      message: "Dados de utilizador invalido",
+      message: "Dados de User invalido",
       data: null
     })
   } else
@@ -165,27 +165,27 @@ app.post("/add-new-user", async (req: Request, res: Response) => {
   if (createUserResponse === null) {
     return res.status(400).json({
       status: "error",
-      message: "Erro ao criar utilizador",
+      message: "Erro ao criar User",
       data: null
     })
   }
 
   res.status(200).json({
     status: "sucesso",
-    message: "utilizador adicionado",
+    message: "User adicionado",
     data: createUserResponse
   })
 
 })
 
-// rota para obter utilizador por id
+// rota para obter User por id
 app.get("/get-user-by-id/:id", async (req: Request, res: Response) => {
   const { id } = req.params
 
   if (!id) {
     return res.status(400).json({
       status: "error",
-      message: "Dados de utilizador invalido",
+      message: "Dados de User invalido",
       data: null
 
     })
@@ -196,13 +196,13 @@ app.get("/get-user-by-id/:id", async (req: Request, res: Response) => {
   if (getUserByIdResponse === null) {
     return res.status(400).json({
       status: "error",
-      message: "Utilizador nao encontrado",
+      message: "User nao encontrado",
       data: null
     })
   }
   res.status(200).json({
     status: "sucesso",
-    mensagem: "utilizador encontrado",
+    mensagem: "User encontrado",
     data: getUserByIdResponse
   })
 })
@@ -213,18 +213,18 @@ app.get("/get-all-users", async (req: Request, res: Response) => {
   if (!getAllUsersResponse) {
     return res.status(400).json({
       status: "error",
-      message: "Erro ao selicionar utilizador",
+      message: "Erro ao selicionar User",
       data: null
     })
   }
   res.status(200).json({
     status: "sucesso",
-    mensagem: "utilizadores encontrado",
+    mensagem: "Useres encontrado",
     data: getAllUsersResponse
   })
 })
 
-// rota para atualizar utilizador
+// rota para atualizar User
 
 app.put("/update-service-by-id/:id", async (req: Request, res: Response) => {
   const { id } = req.params
@@ -242,7 +242,7 @@ app.put("/update-service-by-id/:id", async (req: Request, res: Response) => {
   if (!updatedUser) {
     return res.status(400).json({
       status: "error",
-      message: "Dados de utilizador invalidos",
+      message: "Dados de User invalidos",
       data: null
     })
   }
@@ -252,23 +252,23 @@ app.put("/update-service-by-id/:id", async (req: Request, res: Response) => {
   if (!updateUserServiceResponse) {
     return res.status(400).json({
       status: "error",
-      message: "Erro ao atualizar utilizador",
+      message: "Erro ao atualizar User",
       data: null
     })
   }
   return res.status(200).json({
     status: "success",
-    message: "Utilizador atualizado com sucesso",
+    message: "User atualizado com sucesso",
     data: updateUserServiceResponse
   })
 
 })
 
 
-// rota para apagar utilizador
+// rota para apagar User
 
 app.delete("/delete-user-by-id/:id", async (req: Request, res: Response) => {
-  const {id} = req.params
+  const { id } = req.params
 
 
   if (!id) {
@@ -284,13 +284,13 @@ app.delete("/delete-user-by-id/:id", async (req: Request, res: Response) => {
   if (!deleteUserResponse) {
     return res.status(400).json({
       status: "error",
-      message: "Erro ao apagar utilizador",
+      message: "Erro ao apagar User",
       data: null
     })
   }
   return res.status(200).json({
     status: "success",
-    message: "Utilizador apagado com sucesso",
+    message: "User apagado com sucesso",
     data: deleteUserResponse
   })
 })
@@ -366,8 +366,8 @@ app.get("/get-service-by-id/:id", async (req: Request, res: Response) => {
 })
 
 app.get("/get-all-services", async (req: Request, res: Response) => {
-  
-  
+
+
 
   const getAllServicesResponse = await getAllServices()
 
@@ -429,7 +429,7 @@ app.put("/update-service-by-id/:id", async (req: Request, res: Response) => {
 // rota para apagar servico
 
 app.delete("/delete-service-by-id/:id", async (req: Request, res: Response) => {
-  const {id} = req.params
+  const { id } = req.params
 
 
   if (!id) {
@@ -457,7 +457,7 @@ app.delete("/delete-service-by-id/:id", async (req: Request, res: Response) => {
 })
 
 
-console.log("data formatado: " )
+console.log("data formatado: ")
 
 app.listen(8080, () => {
   console.log("Server running on port 8080")

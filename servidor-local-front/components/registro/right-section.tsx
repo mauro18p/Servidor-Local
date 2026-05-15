@@ -106,14 +106,14 @@ export const RightSection = () => {
             }),
         });
         if (response.status === 200) {
-            toast.success("Utilizador criado com sucesso!");
+            toast.success("User criado com sucesso!");
 
 
             if (typeof window !== "undefined") {
                 window.location.href = "/login";
             }
         } else {
-            toast.error("Erro ao criar utilizador!");
+            toast.error("Erro ao criar User!");
         }
     };
 

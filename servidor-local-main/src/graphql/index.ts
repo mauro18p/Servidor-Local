@@ -31,6 +31,14 @@ export const resolvers = {
         ...categoriaResolver.Mutation,
     },
 
+    ...userResolver,
+    ...serviceResolver,
+    ...propostaResolver,
+    ...prestadorResolver,
+    ...prestacaoServicoResolver,
+    ...orcamentoResolver,
+    ...empresaResolver,
+    ...categoriaResolver,
 }
 
 

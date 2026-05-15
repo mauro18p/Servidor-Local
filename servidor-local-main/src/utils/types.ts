@@ -93,7 +93,7 @@ export interface ServicoTypeDB {
 
 export interface PrestadorTypeDB {
     id: string,
-    id_utilizadores: string,
+    id_user: string,
     nif: number,
     profissao: string,
     taxa_urgencia: number,
@@ -108,7 +108,7 @@ export interface PrestadorTypeDB {
 export interface OrcamentoDBType {
     id: string,
     total: number,
-    id_utilizadores: string,
+    id_user: string,
     enabled: boolean,
     created_at: string,
     updated_at: string
@@ -138,7 +138,7 @@ export interface PrestacaoServicoDBType {
     preco_hora: number,
     estado: EstadoPrestacaoServico,
     id_orcamento: string,
-    id_utilizador: string,
+    id_User: string,
     id_empresa: string,
     tipo_prestador: TipoPrestador,
     urgente: boolean,
@@ -195,13 +195,13 @@ export interface EmpresaDBType {
     localizacao: string,
     nif: string,
     icone: string,
-    id_utilizador: string
+    id_User: string
     enabled: boolean,
     created_at: string,
     updated_at: string
 }
 
-export interface PrestacaoServicoPorCategoriaType{
+export interface PrestacaoServicoPorCategoriaType {
     id_prestacao_servico: string,
     descricao: string,
     nome_servico: string,

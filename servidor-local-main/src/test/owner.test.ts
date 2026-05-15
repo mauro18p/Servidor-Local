@@ -13,8 +13,8 @@ describe("Unit Test: isOwner Middleware", () => {
             json: jest.fn(),
         };
     });
-    it("Deve retornar 403 se o utilizador nao for o dono do recurso", async () => {
-        //1- Simulacao de um utilizador logado (ID: "use_123")
+    it("Deve retornar 403 se o User nao for o dono do recurso", async () => {
+        //1- Simulacao de um User logado (ID: "use_123")
         mockRequest = {
             user: { id: "use_123" },
             params: { id: "servico_999" }
@@ -22,10 +22,10 @@ describe("Unit Test: isOwner Middleware", () => {
 
         //2- Simulacao do Model (ID do dono na BD é "outro_user")
         const mockModel = {
-            get: jest.fn<any>().mockResolvedValue({ id_utilizador: "outro_user" }),
+            get: jest.fn<any>().mockResolvedValue({ id_User: "outro_user" }),
         }
 
-        const middleware = isOwner(mockModel, "id_utilizador");
+        const middleware = isOwner(mockModel, "id_User");
         await middleware(mockRequest, mockResponse, nextFunction);
 
         //3- verificacao: Deve ser bloqueada com 403

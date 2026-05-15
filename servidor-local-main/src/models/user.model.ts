@@ -7,7 +7,7 @@ import { hashPassword } from "../utils/password.js";
 export const UserModel = {
     async create(newUser: userTypeDB) {
         try {
-            const query = `INSERT INTO tbl_utilizadores (
+            const query = `INSERT INTO tbl_Useres (
             id, nome, numero_identificacao, data_nascimento, 
             email, password, telefone, pais, localidade, 
             enabled, created_at, updated_at
@@ -35,9 +35,9 @@ export const UserModel = {
         }
     },
 
-    async getAll() {   
+    async getAll() {
         try {
-            const query = "SELECT * FROM tbl_utilizadores";
+            const query = "SELECT * FROM tbl_Useres";
 
             const rows = await db.execute(query);
 
@@ -50,7 +50,7 @@ export const UserModel = {
 
     async get(id: string) {
         try {
-            const query = 'SELECT * FROM tbl_utilizadores WHERE id = ?'
+            const query = 'SELECT * FROM tbl_Useres WHERE id = ?'
 
             const [rows] = await db.execute(query, [id])
 
@@ -65,8 +65,8 @@ export const UserModel = {
     async getByEmail(email: string): Promise<userTypeDB | null> {
         try {
             const [rows] = await db.execute(
-                `SELECT * FROM tbl_utilizadores
-                WHERE tbl_utilizadores.email = ?`,
+                `SELECT * FROM tbl_Useres
+                WHERE tbl_Useres.email = ?`,
                 [email]
             )
 
@@ -80,7 +80,7 @@ export const UserModel = {
 
     async update(id: string, updateUser: userTypeDB) {
         try {
-            const query = `UPDATE tbl_utilizadores
+            const query = `UPDATE tbl_Useres
                     SET
                         nome=?,
                         numero_identificacao=?,
@@ -122,7 +122,7 @@ export const UserModel = {
 
     async delete(id: string) {
         try {
-            const query = 'DELETE FROM tbl_utilizadores WHERE id = ?'
+            const query = 'DELETE FROM tbl_Useres WHERE id = ?'
 
             const value = [id]
 

@@ -18,7 +18,7 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
     // Bearer nslkfnlkasjojwenfnknlanfnifowesdnlsndfndngiwoe
 
     if (!authHeader) {
-        return res.status(401).json({ message: "Utilizador nao authenticado" })
+        return res.status(401).json({ message: "User nao authenticado" })
     }
 
     const token = authHeader.split(" ")[1]
@@ -26,9 +26,9 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
 
     try {
         const decodedToken = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: string, email: string, role: string }
-        
+
         next()
-        
+
         req.user = {
             id: decodedToken.id,
             email: decodedToken.email,
@@ -44,7 +44,7 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
 export function authorize(roles: string[]) {
     return (req: Request, res: Response, next: NextFunction) => {
         if (!req.user) {
-            return res.status(401).json({ message: "Utilizador nao authenticado" })
+            return res.status(401).json({ message: "User nao authenticado" })
         }
 
         if (!roles.includes(req.user.role)) {
@@ -65,7 +65,7 @@ export function isOwner(model: any, field: string) {
 
         if (!entity) return res.status(404).json({ message: "Entidade nao encontrada" })
 
-        if (!userId) return res.status(404).json({ message: "Utilizador nao autenticado" })
+        if (!userId) return res.status(404).json({ message: "User nao autenticado" })
 
         if (entity[field] !== userId) return res.status(403).json({ message: "Permissao insuficiente" })
 

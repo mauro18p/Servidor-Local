@@ -27,7 +27,7 @@ components:
         total:
           type: number
           example: 1000
-        id_utilizadores:
+        id_user:
           type: string
           example: "M002b "
         enabled:
@@ -35,7 +35,7 @@ components:
           example: true
       required:
         - total  
-        - id_utilizadores  
+        - id_user  
         - enabled  
 
     #Schema generico para sucesso

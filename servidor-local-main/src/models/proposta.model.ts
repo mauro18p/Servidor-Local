@@ -45,7 +45,7 @@ export const PropostaModel = {
                     pr.id as owner
                 FROM tbl_proposta pt
                 INNER JOIN tbl_prestadores pr ON pt.id_prestador = pr.id
-                INNER JOIN tbl_utilizadores u ON pr.id_utilizador = u.id
+                INNER JOIN tbl_Useres u ON pr.id_User = u.id
                 WHERE pt.id = ?`,
 
                 [id]
@@ -118,6 +118,6 @@ export const PropostaModel = {
         } catch (err) {
             console.log(err)
             return null
-        }  
+        }
     }
 }
