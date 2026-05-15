@@ -1,6 +1,6 @@
 import { EmpresaModel } from "../../models/empresa.model.js";
 import { OrcamentoModel } from "../../models/oramento.model.js";
-import { PrestacaoServicoModel } from "../../models/prestacao-servico.models.js"; 
+import { PrestacaoServicoModel } from "../../models/prestacao-servico.models.js";
 import { FreelancerModel } from "../../models/prestador.model.js";
 import { PropostaModel } from "../../models/proposta.model.js";
 import { ServiceModel } from "../../models/servico.model.js";
@@ -32,23 +32,23 @@ export const prestacaoServicoResolver = {
     },
 
     PrestacaoServico: {
-            id_prestador: async (parent: { id_prestador: string }) => {
-                return await FreelancerModel.get(parent.id_prestador)
-            },
-            id_servicos: async (parent: { id_servico: string }) => {
-                return await ServiceModel.get(parent.id_servico)
-            },
-            id_empresa: async (parent: { id_empresa: string }) => {
-                return await EmpresaModel.get(parent.id_empresa)
-            },
-            id_orcamento: async (parent: { id_orcamento: string }) => {
-                return await OrcamentoModel.get(parent.id_orcamento)
-            },
-            id_utilizadores: async (parent: { id_utilizador: string }) => {
-                return await UserModel.get(parent.id_utilizador)
-            },
-            id_prestacao_servico: async (parent: { id : string }) => {
-                return await PropostaModel.getByIdPrestacaoServico(parent.id)
-            }
+        prestador: async (parent: { id: string }) => {
+            return await FreelancerModel.get(parent.id)
+        },
+        id_servicos: async (parent: { id_servico: string }) => {
+            return await ServiceModel.get(parent.id_servico)
+        },
+        empresa: async (parent: { id: string }) => {
+            return await EmpresaModel.get(parent.id)
+        },
+        orcamento: async (parent: { id: string }) => {
+            return await OrcamentoModel.get(parent.id)
+        },
+        Useres: async (parent: { id: string }) => {
+            return await UserModel.get(parent.id)
+        },
+        proposta: async (parent: { id: string }) => {
+            return await PropostaModel.get(parent.id)
         }
+    }
 }
